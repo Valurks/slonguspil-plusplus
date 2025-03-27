@@ -7,12 +7,16 @@ public class SnakesAndLadders {
     private final HashMap<Integer, Integer> snakesAndLadders;
 
     SnakesAndLadders() {
+
         snakesAndLadders = new HashMap<>();
+        /*
         snakesAndLadders.put(5, 8);
         snakesAndLadders.put(12, 7);
         snakesAndLadders.put(23, 19);
         snakesAndLadders.put(16, 10);
         snakesAndLadders.put(7, 15);
+
+         */
     }
 
     public int newTile(Player player) {

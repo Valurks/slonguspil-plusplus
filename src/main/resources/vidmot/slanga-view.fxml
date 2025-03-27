@@ -23,12 +23,12 @@
             <RowConstraints/>
         </rowConstraints>
         <ImageView fx:id="fxPlayer2Dislpay" fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true"
-                   GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.halignment="CENTER"
+                   GridPane.halignment="CENTER"
                    GridPane.valignment="CENTER">
             <Image url="@images/characters/blue.png"/>
         </ImageView>
         <ImageView fx:id="fxPlayer1Dislpay" fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true"
-                   GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.halignment="CENTER"
+                   GridPane.halignment="CENTER"
                    GridPane.valignment="CENTER">
             <Image url="@images/characters/red.png"/>
         </ImageView>

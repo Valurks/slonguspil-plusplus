@@ -18,8 +18,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class SlangaController {
-    private static final int GRID_ROW = 4;
-    private static final int GRID_COL = 6;
+    private static final int GRID_ROW = 3;
+    private static final int GRID_COL = 3;
 
     public ImageView fxDice;
     public Button fxButton;
@@ -33,7 +33,7 @@ public class SlangaController {
     @FXML
     private Label fxLabel2;
 
-    private final Game game = new Game(GRID_COL, GRID_ROW);
+    private final Game game = new Game(GRID_ROW, GRID_COL);
     private final Dice dice = game.getDice();
     private final Player player1 = game.getPlayer1();
     private final Player player2 = game.getPlayer2();
@@ -45,6 +45,7 @@ public class SlangaController {
     public void initialize() {
         createGrid();
         createListener();
+        setPlayersPos();
 
         visualSnakesLadders();
 
@@ -56,6 +57,19 @@ public class SlangaController {
 
         fxPlayer2Dislpay.toFront();
         fxPlayer1Dislpay.toFront();
+    }
+
+    /**
+     * Núna hægt að breyta gridpane
+     */
+    private void setPlayersPos() {
+        Label label = labels.getFirst();
+        int startCol = GridPane.getColumnIndex(label);
+        int startRow = GridPane.getRowIndex(label);
+        GridPane.setColumnIndex(fxPlayer1Dislpay,startCol);
+        GridPane.setRowIndex(fxPlayer1Dislpay,startRow);
+        GridPane.setRowIndex(fxPlayer2Dislpay,startCol);
+        GridPane.setRowIndex(fxPlayer2Dislpay,startRow);
     }
 
     public void createGrid() {
