@@ -68,7 +68,7 @@ public class SlangaController {
         int startRow = GridPane.getRowIndex(label);
         GridPane.setColumnIndex(fxPlayer1Dislpay,startCol);
         GridPane.setRowIndex(fxPlayer1Dislpay,startRow);
-        GridPane.setRowIndex(fxPlayer2Dislpay,startCol);
+        GridPane.setColumnIndex(fxPlayer2Dislpay,startCol);
         GridPane.setRowIndex(fxPlayer2Dislpay,startRow);
     }
 
