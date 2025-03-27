@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class SlangaController {
+    private static final int GRID_ROW = 4;
+    private static final int GRID_COL = 6;
+
     public ImageView fxDice;
     public Button fxButton;
     public VBox fxLabelContainer;
@@ -30,7 +33,7 @@ public class SlangaController {
     @FXML
     private Label fxLabel2;
 
-    private final Game game = new Game(4, 6);
+    private final Game game = new Game(GRID_COL, GRID_ROW);
     private final Dice dice = game.getDice();
     private final Player player1 = game.getPlayer1();
     private final Player player2 = game.getPlayer2();
@@ -57,13 +60,16 @@ public class SlangaController {
 
     public void createGrid() {
         String[] colors = new String[]{"FF8080", "F6FDC3", "FFCF96", "CDFAD5"};
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 6; j++) {
-                int index = i * 6 + j + 1;
+        for (int i = 0; i < GRID_ROW; i++) {
+            for (int j = 0; j < GRID_COL; j++) {
+                int col = (i % 2 == 0) ? j : GRID_COL - j - 1; // Ef oddatölu röð -> byrja fra hægri
+                int row = GRID_ROW - i - 1; // Byrja niðri
+                int index = i * GRID_COL + j + 1;
                 labels.add(new Label(index + ""));
                 Label label = labels.get(index - 1);
                 label.setStyle("-fx-background-color: #" + colors[(int) (Math.random() * colors.length)] + ";");
-                fxGrid.add(label, j, 4 - i);
+                fxGrid.add(label, col, row);
+
             }
         }
     }
