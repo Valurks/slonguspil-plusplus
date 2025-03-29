@@ -1,7 +1,9 @@
 package vinnsla;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Game {
 
@@ -10,6 +12,8 @@ public class Game {
     private final Player player2;
     private final SnakesAndLadders snakesAndLadders;
     private Player nextPlayer;
+    private int difficulty;
+
     private final ArrayList<Player> players = new ArrayList<>();
     private int currentPlayerIndex = 0;
 
@@ -22,6 +26,7 @@ public class Game {
         players.add(player2);
         players.add(player3);
         snakesAndLadders = new SnakesAndLadders();
+        snakesAndLadders.setSize(max);
     }
     public ArrayList<Player> getPlayers(){
         return players;
@@ -68,4 +73,21 @@ public class Game {
         return 0;
     }
 
+
+    public static void main(String[] args) {
+        Game game = new Game(4, 6);
+        game.newGame();
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+        System.out.print("Á næsti leikmaður að gera? ");
+        String svar = scanner.next();
+        while ("j".equalsIgnoreCase(svar)) {
+            if (game.round() == 1) {
+                System.out.println(game.nextPlayer.getName() + " er kominn í mark");
+                return;
+            }
+            System.out.print("Á næsti leikmaður að gera?");
+//            svar = scanner.next();
+        }
+
+    }
 }
