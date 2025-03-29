@@ -18,14 +18,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class SlangaController {
-    private static final int GRID_ROW = 3;
-    private static final int GRID_COL = 3;
+    private static final int GRID_ROW = 4;
+    private static final int GRID_COL = 6;
 
     public ImageView fxDice;
     public Button fxButton;
     public VBox fxLabelContainer;
-    public ImageView fxPlayer1Dislpay;
-    public ImageView fxPlayer2Dislpay;
     @FXML
     private GridPane fxGrid;
     @FXML
@@ -37,6 +35,8 @@ public class SlangaController {
     private final Dice dice = game.getDice();
     private final Player player1 = game.getPlayer1();
     private final Player player2 = game.getPlayer2();
+    private final ArrayList<Player> players = game.getPlayers();
+    private final ArrayList<ImageView> playerIcons = new ArrayList<>();
 
     private boolean finished;
 
@@ -45,6 +45,7 @@ public class SlangaController {
     public void initialize() {
         createGrid();
         createListener();
+        createPlayers();
         setPlayersPos();
 
         visualSnakesLadders();
@@ -52,11 +53,28 @@ public class SlangaController {
         fxLabel1.textProperty().bind(player1.getMessage());
         fxLabel2.textProperty().bind(player2.getMessage());
 
-        playerDisplayListener(player1, fxPlayer1Dislpay);
+       /* playerDisplayListener(player1, fxPlayer1Dislpay);
         playerDisplayListener(player2, fxPlayer2Dislpay);
 
         fxPlayer2Dislpay.toFront();
         fxPlayer1Dislpay.toFront();
+
+        */
+    }
+
+    private void createPlayers() {
+        int i = 0;
+        for (Player player : players) {
+            ImageView currentIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/characters/" + i + ".png"))));
+            playerIcons.add(currentIcon);
+            currentIcon.setFitHeight(50);
+            currentIcon.setFitWidth(50);
+            currentIcon.pickOnBoundsProperty();
+            currentIcon.preserveRatioProperty();
+            fxGrid.getChildren().add(currentIcon);
+            playerDisplayListener(player, currentIcon);
+            i++;
+        }
     }
 
     /**
@@ -66,10 +84,16 @@ public class SlangaController {
         Label label = labels.getFirst();
         int startCol = GridPane.getColumnIndex(label);
         int startRow = GridPane.getRowIndex(label);
-        GridPane.setColumnIndex(fxPlayer1Dislpay,startCol);
-        GridPane.setRowIndex(fxPlayer1Dislpay,startRow);
-        GridPane.setColumnIndex(fxPlayer2Dislpay,startCol);
-        GridPane.setRowIndex(fxPlayer2Dislpay,startRow);
+        for (ImageView icon : playerIcons) {
+            GridPane.setColumnIndex(icon, startCol);
+            GridPane.setRowIndex(icon, startRow);
+        }
+        /*GridPane.setColumnIndex(fxPlayer1Dislpay, startCol);
+        GridPane.setRowIndex(fxPlayer1Dislpay, startRow);
+        GridPane.setColumnIndex(fxPlayer2Dislpay, startCol);
+        GridPane.setRowIndex(fxPlayer2Dislpay, startRow);
+
+         */
     }
 
     public void createGrid() {

@@ -22,16 +22,6 @@
             <RowConstraints/>
             <RowConstraints/>
         </rowConstraints>
-        <ImageView fx:id="fxPlayer2Dislpay" fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true"
-                   GridPane.halignment="CENTER"
-                   GridPane.valignment="CENTER">
-            <Image url="@images/characters/blue.png"/>
-        </ImageView>
-        <ImageView fx:id="fxPlayer1Dislpay" fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true"
-                   GridPane.halignment="CENTER"
-                   GridPane.valignment="CENTER">
-            <Image url="@images/characters/red.png"/>
-        </ImageView>
 
     </GridPane>
     <HBox>
