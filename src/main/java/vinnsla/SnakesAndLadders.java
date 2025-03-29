@@ -52,7 +52,6 @@ public class SnakesAndLadders {
 
     private int findValidTile() {
         int tile = (int) (Math.random()*(max-3)+2);
-        boolean valid = true;
         if(snakesAndLadders.containsKey(tile) || snakesAndLadders.containsValue(tile)) {
             return findValidTile();
         }
