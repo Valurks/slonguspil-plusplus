@@ -1,5 +1,6 @@
 package vidmot;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -47,11 +48,17 @@ public class SlangaController {
         createListener();
         createPlayers();
         setPlayersPos();
+        //Kannski breyta í fxdice í button
+        fxDice.disableProperty().bind(game.botTurnProperty());
+        game.setOnBotTurn(() -> Platform.runLater(this::diceHandler));
+
 
         visualSnakesLadders();
 
-        fxLabel1.textProperty().bind(player1.getMessage());
+        /*fxLabel1.textProperty().bind(player1.getMessage());
         fxLabel2.textProperty().bind(player2.getMessage());
+
+         */
 
        /* playerDisplayListener(player1, fxPlayer1Dislpay);
         playerDisplayListener(player2, fxPlayer2Dislpay);
@@ -139,11 +146,10 @@ public class SlangaController {
     }
 
     public void namePopUp() {
-        DialogController dialog1 = new DialogController(player1);
-        dialog1.showDialog();
-
-        DialogController dialog2 = new DialogController(player2);
-        dialog2.showDialog();
+        for (Player player: players){
+            DialogController dialog = new DialogController(player);
+            dialog.showDialog();
+        }
     }
 
     public void buttonClicked() {

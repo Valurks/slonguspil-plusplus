@@ -1,5 +1,9 @@
 package vinnsla;
 
+import javafx.animation.PauseTransition;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.util.Duration;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,12 +20,15 @@ public class Game {
 
     private final ArrayList<Player> players = new ArrayList<>();
     private int currentPlayerIndex = 0;
+    private Runnable onBotTurn;
+    private final SimpleBooleanProperty botTurn = new SimpleBooleanProperty(false);
+
 
     public Game(int height, int width) {
         int max = height * width;
-        player1 = new Player("Ónefndur Leikmaður", max);
-        player2 = new Player("Ónefndur Leikmaður", max);
-        Player player3 = new Player("player3",max);
+        player1 = new Player("Ónefndur Leikmaður", max, false);
+        player2 = new Player("Ónefndur Leikmaður", max, false);
+        Player player3 = new Player("player3",max, true);
         players.add(player1);
         players.add(player2);
         players.add(player3);
@@ -55,7 +62,7 @@ public class Game {
         for (Player player: players){
             player.setTile(1);
         }
-        nextPlayer = player1;
+        nextPlayer = players.getFirst();
 
     }
 
@@ -66,12 +73,30 @@ public class Game {
         else {
             nextPlayer.setTile(snakesAndLadders.newTile(nextPlayer));
         }
-        currentPlayerIndex++;
-        int i = (currentPlayerIndex) % players.size();
+
+        int i = (++currentPlayerIndex) % players.size();
         nextPlayer = players.get(i);
+
         //nextPlayer = nextPlayer == player1 ? player2 : player1;
+        if(nextPlayer.isBot())
+            handleBotRound();
         return 0;
     }
+
+    private void handleBotRound() {
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        botTurn.set(true); // Ef fxdice er button
+        pause.setOnFinished(event -> onBotTurn.run());
+        botTurn.set(false);
+        pause.play();
+    }
+    public SimpleBooleanProperty botTurnProperty(){
+        return botTurn;
+    }
+    public void setOnBotTurn(Runnable onBotTurn){
+        this.onBotTurn = onBotTurn;
+    }
+
 
 
     public static void main(String[] args) {

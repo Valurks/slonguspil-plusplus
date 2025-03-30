@@ -9,10 +9,12 @@ public class Player {
     private SimpleStringProperty name;
     private final SimpleStringProperty message;
     private final int max;
+    private boolean isBot;
 
-    Player(String name, int max) {
+    Player(String name, int max, Boolean isBot) {
         this.name = new SimpleStringProperty(name);
         this.max = max;
+        this.isBot = isBot;
         tile = new SimpleIntegerProperty(1);
         message = new SimpleStringProperty("");
     }
@@ -54,5 +56,9 @@ public class Player {
 
     public void setMessage(String message) {
         this.message.set(message);
+    }
+
+    public boolean isBot() {
+        return isBot;
     }
 }
