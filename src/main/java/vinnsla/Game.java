@@ -33,7 +33,7 @@ public class Game {
         players.add(player2);
         players.add(player3);
         snakesAndLadders = new SnakesAndLadders();
-        snakesAndLadders.setSize(max);
+
     }
     public ArrayList<Player> getPlayers(){
         return players;
