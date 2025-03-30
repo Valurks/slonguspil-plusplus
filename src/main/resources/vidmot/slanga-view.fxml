@@ -32,7 +32,7 @@
         </VBox>
         <Region maxWidth="2" minWidth="2"/>
         <Button fx:id="fxButton" onAction="#nyrLeikurHandler" onMousePressed="#buttonClicked"
-                onMouseReleased="#buttonReleased" prefHeight="75" prefWidth="75" styleClass="button" text="Nýr game"/>
+                onMouseReleased="#buttonReleased" prefHeight="75" prefWidth="75" styleClass="button" text="Nýr leikur"/>
         <Region HBox.hgrow="ALWAYS"/>
         <ImageView fx:id="fxDice" fitHeight="75" fitWidth="75" onMousePressed="#diceHandler" pickOnBounds="true"
                    preserveRatio="true">

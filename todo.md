@@ -2,21 +2,22 @@
 
 Backend
 
--[ ] Random slöngu/stigar - V
--[ ] Erfiðleikastig - V
+- [x] Random slöngu/stigar - V
+- [x] Erfiðleikastig - V
+- [ ] fínstills gildi
 
 
--[ ] Fjöldi leikmanna - H
--[ ] Bots - H
+- [ ] Fjöldi leikmanna - H
+- [ ] Bots - H
 
 
--[ ] Stærð borðs - H
+- [ ] Stærð borðs - H
 
 
--[ ] Stillingar - V
--[ ] Breyta tungumáli - V
+- [ ] Stillingar - V
+- [ ] Breyta tungumáli - V
 
 Frontend
 
--[ ] Upphafsskjar
--[ ] Animations 
+- [ ] Upphafsskjar
+- [ ] Animations
