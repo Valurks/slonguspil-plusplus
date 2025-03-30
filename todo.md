@@ -7,11 +7,11 @@ Backend
 - [ ] fínstills gildi
 
 
-- [ ] Fjöldi leikmanna - H
+- [x] Fjöldi leikmanna - H
 - [ ] Bots - H
 
 
-- [ ] Stærð borðs - H
+- [x] Stærð borðs - H
 
 
 - [ ] Stillingar - V
