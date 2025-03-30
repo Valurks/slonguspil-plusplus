@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" stylesheets="@css/slanga.css" xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.SlangaController" styleClass="window">
+<VBox alignment="CENTER" spacing="20.0" styleClass="window" stylesheets="@css/slanga.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.SlangaController">
     <GridPane fx:id="fxGrid" styleClass="grid">
         <columnConstraints>
-            <ColumnConstraints/>
-            <ColumnConstraints/>
-            <ColumnConstraints/>
-            <ColumnConstraints/>
-            <ColumnConstraints/>
-            <ColumnConstraints/>
-            <ColumnConstraints/>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
         </rowConstraints>
 
     </GridPane>
     <HBox>
         <VBox fx:id="fxLabelContainer" styleClass="labels">
-            <Label fx:id="fxLabel1"/>
-            <Region VBox.vgrow="ALWAYS"/>
-            <Label fx:id="fxLabel2"/>
+            <Label fx:id="fxLabel1" />
+            <Region VBox.vgrow="ALWAYS" />
+            <Label fx:id="fxLabel2" />
         </VBox>
-        <Region maxWidth="2" minWidth="2"/>
-        <Button fx:id="fxButton" onAction="#nyrLeikurHandler" onMousePressed="#buttonClicked"
-                onMouseReleased="#buttonReleased" prefHeight="75" prefWidth="75" styleClass="button" text="Nýr leikur"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <ImageView fx:id="fxDice" fitHeight="75" fitWidth="75" onMousePressed="#diceHandler" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@images/dice/0.png"/>
+        <Region maxWidth="2" minWidth="2" />
+        <Button fx:id="fxButton" onAction="#nyrLeikurHandler" onMousePressed="#buttonClicked" onMouseReleased="#buttonReleased" prefHeight="75" prefWidth="75" styleClass="button" text="Nýr leikur" />
+        <Region HBox.hgrow="ALWAYS" />
+        <ImageView fx:id="fxDice" fitHeight="75" fitWidth="75" onMousePressed="#diceHandler" pickOnBounds="true" preserveRatio="true">
+            <Image url="@images/dice/0.png" />
         </ImageView>
     </HBox>
 </VBox>

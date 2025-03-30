@@ -41,17 +41,11 @@ public class Game {
     public Dice getDice() {
         return dice;
     }
-
+    public void addPlayer(Player player){
+        players.add(player);
+    }
     public Player getNextPlayer() {
         return nextPlayer;
-    }
-
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public Player getPlayer2() {
-        return player2;
     }
 
     public HashMap<Integer, Integer> getSlongurStigar() {
@@ -84,8 +78,8 @@ public class Game {
     }
 
     private void handleBotRound() {
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
         botTurn.set(true); // Ef fxdice er button
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> onBotTurn.run());
         botTurn.set(false);
         pause.play();

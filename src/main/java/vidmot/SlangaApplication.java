@@ -10,8 +10,9 @@ import java.io.IOException;
 public class SlangaApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SlangaApplication.class.getResource("slanga-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SlangaApplication.class.getResource("upphaf-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 520, 520);
+        ViewSwitcher.setScene(scene);
 //        stage.setResizable(false);
         stage.setTitle("Slönguspil");
         stage.setScene(scene);

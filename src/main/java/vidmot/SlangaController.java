@@ -1,6 +1,7 @@
 package vidmot;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -34,8 +35,6 @@ public class SlangaController {
 
     private final Game game = new Game(GRID_ROW, GRID_COL);
     private final Dice dice = game.getDice();
-    private final Player player1 = game.getPlayer1();
-    private final Player player2 = game.getPlayer2();
     private final ArrayList<Player> players = game.getPlayers();
     private final ArrayList<ImageView> playerIcons = new ArrayList<>();
 
@@ -139,8 +138,8 @@ public class SlangaController {
         finished = false;
         buttonReleased();
         game.newGame();
-        player1.setMessage("");
-        player2.setMessage("");
+        for (Player player: players)
+            player.setMessage("");
         namePopUp();
 
     }
@@ -196,4 +195,5 @@ public class SlangaController {
             fxGrid.add(view, col, row);
         }
     }
+
 }
