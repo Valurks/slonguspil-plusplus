@@ -74,14 +74,19 @@ public class Game {
         //nextPlayer = nextPlayer == player1 ? player2 : player1;
         if(nextPlayer.isBot())
             handleBotRound();
+
+
         return 0;
     }
 
     private void handleBotRound() {
-        botTurn.set(true); // Ef fxdice er button
+        botTurn.set(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(event -> onBotTurn.run());
-        botTurn.set(false);
+        pause.setOnFinished(event -> {
+            onBotTurn.run();
+            botTurn.set(false);
+        });
+
         pause.play();
     }
     public SimpleBooleanProperty botTurnProperty(){

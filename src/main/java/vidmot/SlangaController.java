@@ -47,25 +47,14 @@ public class SlangaController {
         createListener();
         createPlayers();
         setPlayersPos();
-        //Kannski breyta í fxdice í button
-        fxDice.disableProperty().bind(game.botTurnProperty());
+        game.botTurnProperty().addListener((obs,oldVal, newVal) -> {
+            fxDice.setMouseTransparent(newVal);
+        });
         game.setOnBotTurn(() -> Platform.runLater(this::diceHandler));
 
 
         visualSnakesLadders();
 
-        /*fxLabel1.textProperty().bind(player1.getMessage());
-        fxLabel2.textProperty().bind(player2.getMessage());
-
-         */
-
-       /* playerDisplayListener(player1, fxPlayer1Dislpay);
-        playerDisplayListener(player2, fxPlayer2Dislpay);
-
-        fxPlayer2Dislpay.toFront();
-        fxPlayer1Dislpay.toFront();
-
-        */
     }
 
     private void createPlayers() {
@@ -118,6 +107,7 @@ public class SlangaController {
     }
 
     public void diceHandler() {
+
         int utkoma = game.round();
         if (utkoma == -1 || finished) {
             nyrLeikurHandler();
