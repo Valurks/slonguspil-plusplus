@@ -1,6 +1,6 @@
 package vidmot;
 
-import javafx.event.ActionEvent;
+import java.util.Arrays;
 
 /**
  * Nafn: Hjörleifur Örn Sveinsson
@@ -8,11 +8,20 @@ import javafx.event.ActionEvent;
  * Lýsing:
  */
 public class UpphafController {
-    public void onByrja(ActionEvent actionEvent) {
+
+    private final SettingsDialogController settings = new SettingsDialogController();
+    public void onByrja() {
         ViewSwitcher.switchTo(View.GAME);
     }
 
-    public void onLeikmenn(ActionEvent actionEvent) {
+    public void onLeikmenn() {
         ViewSwitcher.switchTo(View.PLAYER);
+    }
+
+    public void onSettings() {
+        settings.onOpen();
+        for (String[] val : settings.getResult()) {
+            System.out.println(Arrays.toString(val));
+        }
     }
 }

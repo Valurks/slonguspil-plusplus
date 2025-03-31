@@ -35,7 +35,7 @@ public class SnakesAndLadders {
             System.out.println("Board ssize not set");
             return;
         }
-        // fyrri hluti er stærð borðs/6  seinni hlutinn skilar random tölu milli -max/9 til max/9
+        // randomPosNeg er random tala milli -1 og 1
         double randomPosNeg = Math.random()*difficulty*2-1;
         System.out.println(randomPosNeg);
         int numberOfSL = (int) (difficulty*max/4.0 + randomPosNeg*max/12);

@@ -6,16 +6,15 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="520.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.UpphafController">
-   <children>
       <VBox alignment="CENTER" prefHeight="520.0" prefWidth="520.0">
          <children>
             <Button fx:id="fxByrja" mnemonicParsing="false" onAction="#onByrja" text="Byrja" />
             <ButtonBar prefHeight="49.0" prefWidth="600.0">
               <buttons>
                 <Button fx:id="fxLeikmenn" mnemonicParsing="false" onAction="#onLeikmenn" text="Leikmenn" />
+                  <Button onAction="#onSettings"/>
               </buttons>
             </ButtonBar>
          </children>
       </VBox>
-   </children>
 </AnchorPane>

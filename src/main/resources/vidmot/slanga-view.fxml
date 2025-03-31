@@ -4,32 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" styleClass="window" stylesheets="@css/slanga.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.SlangaController">
-    <GridPane fx:id="fxGrid" styleClass="grid">
-        <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-        </rowConstraints>
-
-    </GridPane>
+<VBox alignment="CENTER" spacing="20.0" styleClass="window" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.SlangaController">
+    <GridPane fx:id="fxGrid" styleClass="grid"/>
     <HBox>
         <VBox fx:id="fxLabelContainer" styleClass="labels">
             <Label fx:id="fxLabel1" />

@@ -61,4 +61,8 @@ public class Player {
     public boolean isBot() {
         return isBot;
     }
+
+    public void setBot(boolean isBot) {
+        this.isBot = isBot;
+    }
 }
