@@ -2,6 +2,7 @@ package vinnsla;
 
 import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
 import java.nio.charset.StandardCharsets;
@@ -23,27 +24,32 @@ public class Game {
     private Runnable onBotTurn;
     private final SimpleBooleanProperty botTurn = new SimpleBooleanProperty(false);
 
+    private final SimpleStringProperty message = new SimpleStringProperty("");
 
     public Game(int height, int width) {
         int max = height * width;
         player1 = new Player("Ónefndur Leikmaður", max, false);
         player2 = new Player("Ónefndur Leikmaður", max, false);
-        Player player3 = new Player("player3",max, true);
+        Player player3 = new Player("player3", max, true);
         players.add(player1);
         players.add(player2);
         players.add(player3);
         snakesAndLadders = new SnakesAndLadders();
         snakesAndLadders.setSize(max);
     }
-    public ArrayList<Player> getPlayers(){
+
+    public ArrayList<Player> getPlayers() {
         return players;
     }
+
     public Dice getDice() {
         return dice;
     }
-    public void addPlayer(Player player){
+
+    public void addPlayer(Player player) {
         players.add(player);
     }
+
     public Player getNextPlayer() {
         return nextPlayer;
     }
@@ -53,26 +59,27 @@ public class Game {
     }
 
     public void newGame() {
-        for (Player player: players){
+        for (Player player : players) {
             player.setTile(1);
         }
         nextPlayer = players.getFirst();
-
+        message.set("");
     }
 
     public int round() {
+        message.set("");
         if (nextPlayer == null) return -1;
         dice.throwDice();
         if (nextPlayer.move(dice.getNumber())) return 1;
         else {
-            nextPlayer.setTile(snakesAndLadders.newTile(nextPlayer));
+            nextPlayer.setTile(snakesAndLadders.newTile(nextPlayer, this));
         }
 
         int i = (++currentPlayerIndex) % players.size();
         nextPlayer = players.get(i);
 
         //nextPlayer = nextPlayer == player1 ? player2 : player1;
-        if(nextPlayer.isBot())
+        if (nextPlayer.isBot())
             handleBotRound();
 
 
@@ -89,13 +96,14 @@ public class Game {
 
         pause.play();
     }
-    public SimpleBooleanProperty botTurnProperty(){
+
+    public SimpleBooleanProperty botTurnProperty() {
         return botTurn;
     }
-    public void setOnBotTurn(Runnable onBotTurn){
+
+    public void setOnBotTurn(Runnable onBotTurn) {
         this.onBotTurn = onBotTurn;
     }
-
 
 
     public static void main(String[] args) {
@@ -113,5 +121,13 @@ public class Game {
 //            svar = scanner.next();
         }
 
+    }
+
+    public void setMessage(String message) {
+        this.message.set(message);
+    }
+
+    public SimpleStringProperty messageProperty() {
+        return message;
     }
 }

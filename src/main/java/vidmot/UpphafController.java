@@ -23,5 +23,6 @@ public class UpphafController {
         for (String[] val : settings.getResult()) {
             System.out.println(Arrays.toString(val));
         }
+
     }
 }

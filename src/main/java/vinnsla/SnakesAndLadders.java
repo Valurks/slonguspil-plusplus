@@ -13,15 +13,16 @@ public class SnakesAndLadders {
 
     }
 
-    public int newTile(Player player) {
+    public int newTile(Player player, Game game) {
         int gamli = player.getTile();
         int nyi = snakesAndLadders.getOrDefault(gamli, 0);
         if (nyi == 0) {
             return gamli;
         } else if (nyi > gamli) {
-            player.setMessage(player.getName() + " fór upp stigann!");
+
+            game.setMessage(player.getName() + " fór upp stigann!");
         } else {
-            player.setMessage(player.getName() + " fór niður snákinn :(");
+            game.setMessage(player.getName() + " fór niður snákinn :(");
         }
         return nyi;
     }

@@ -1,7 +1,6 @@
 package vidmot;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -11,9 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import vinnsla.Player;
-import vinnsla.Game;
 import vinnsla.Dice;
+import vinnsla.Game;
+import vinnsla.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,14 +46,19 @@ public class SlangaController {
         createListener();
         createPlayers();
         setPlayersPos();
-        game.botTurnProperty().addListener((obs,oldVal, newVal) -> {
+
+        bindLabels();
+        game.botTurnProperty().addListener((obs, oldVal, newVal) -> {
             fxDice.setMouseTransparent(newVal);
         });
         game.setOnBotTurn(() -> Platform.runLater(this::diceHandler));
 
 
         visualSnakesLadders();
+    }
 
+    private void bindLabels() {
+        fxLabel1.textProperty().bind(game.messageProperty());
     }
 
     private void createPlayers() {
@@ -113,7 +117,7 @@ public class SlangaController {
             nyrLeikurHandler();
         } else if (utkoma == 1) {
             String winner = game.getNextPlayer().getName() + " er kominn í mark!";
-            game.getNextPlayer().setMessage(winner);
+            game.setMessage(winner);
             finished = true;
         }
     }
@@ -122,14 +126,14 @@ public class SlangaController {
         finished = false;
         buttonReleased();
         game.newGame();
-        for (Player player: players)
+        for (Player player : players)
             player.setMessage("");
         namePopUp();
 
     }
 
     public void namePopUp() {
-        for (Player player: players){
+        for (Player player : players) {
             DialogController dialog = new DialogController(player);
             dialog.showDialog();
         }
@@ -179,5 +183,4 @@ public class SlangaController {
             fxGrid.add(view, col, row);
         }
     }
-
 }
