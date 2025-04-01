@@ -11,7 +11,7 @@ public class Player {
     private final int max;
     private boolean isBot;
 
-    Player(String name, int max, Boolean isBot) {
+    public Player(String name, int max, Boolean isBot) {
         this.name = new SimpleStringProperty(name);
         this.max = max;
         this.isBot = isBot;
