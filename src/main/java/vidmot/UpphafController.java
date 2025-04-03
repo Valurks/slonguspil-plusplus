@@ -19,7 +19,7 @@ public class UpphafController {
     }
 
     public void onSettings() {
-        settings.onOpen();
+        settings.open();
         for (String[] val : settings.getResult()) {
             System.out.println(Arrays.toString(val));
         }

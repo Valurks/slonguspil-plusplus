@@ -6,39 +6,31 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Game {
 
-    private final Dice dice = new Dice();
-    private final Player player1;
-    private final Player player2;
+    private Dice dice;
     private final SnakesAndLadders snakesAndLadders;
     private Player nextPlayer;
-    private int difficulty;
+    private final int max;
+    private int noPlayers;
 
-    private final ArrayList<Player> players = new ArrayList<>();
+    private final Player[] players = new Player[4];
     private int currentPlayerIndex = 0;
     private Runnable onBotTurn;
     private final SimpleBooleanProperty botTurn = new SimpleBooleanProperty(false);
 
     private final SimpleStringProperty message = new SimpleStringProperty("");
 
-    public Game(int height, int width) {
-        int max = height * width;
-        player1 = new Player("Ónefndur Leikmaður", max, false);
-        player2 = new Player("Ónefndur Leikmaður", max, false);
-        Player player3 = new Player("player3", max, true);
-        players.add(player1);
-        players.add(player2);
-        players.add(player3);
-        snakesAndLadders = new SnakesAndLadders();
+    public Game(int height, int width, double difficulty) {
+        max = height * width;
+        snakesAndLadders = new SnakesAndLadders(difficulty);
         snakesAndLadders.setSize(max);
     }
 
-    public ArrayList<Player> getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 
@@ -46,8 +38,9 @@ public class Game {
         return dice;
     }
 
-    public void addPlayer(Player player) {
-        players.add(player);
+    public void addPlayer(String name, boolean isBot, int index) {
+        Player player = new Player(name,max,isBot);
+        players[index] = player;
     }
 
     public Player getNextPlayer() {
@@ -59,10 +52,15 @@ public class Game {
     }
 
     public void newGame() {
+        dice = new Dice();
+        noPlayers = 0;
         for (Player player : players) {
-            player.setTile(1);
+            if (player != null) {
+                player.setTile(1);
+                noPlayers ++;
+            }
         }
-        nextPlayer = players.getFirst();
+        nextPlayer = players[0];
         message.set("");
     }
 
@@ -72,17 +70,15 @@ public class Game {
         dice.throwDice();
         if (nextPlayer.move(dice.getNumber())) return 1;
         else {
-            nextPlayer.setTile(snakesAndLadders.newTile(nextPlayer, this));
+            nextPlayer.setTile(snakesAndLadders.newTile(nextPlayer));
         }
 
-        int i = (++currentPlayerIndex) % players.size();
-        nextPlayer = players.get(i);
+        int i = (++currentPlayerIndex) % noPlayers;
+        nextPlayer = players[i];
 
         //nextPlayer = nextPlayer == player1 ? player2 : player1;
         if (nextPlayer.isBot())
             handleBotRound();
-
-
         return 0;
     }
 
@@ -107,7 +103,7 @@ public class Game {
 
 
     public static void main(String[] args) {
-        Game game = new Game(4, 6);
+        Game game = new Game(4, 6,1.0);
         game.newGame();
         Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         System.out.print("Á næsti leikmaður að gera? ");
@@ -125,9 +121,5 @@ public class Game {
 
     public void setMessage(String message) {
         this.message.set(message);
-    }
-
-    public SimpleStringProperty messageProperty() {
-        return message;
     }
 }

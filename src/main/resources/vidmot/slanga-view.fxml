@@ -12,10 +12,15 @@
 <VBox alignment="CENTER" spacing="20.0" styleClass="window" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.SlangaController">
     <GridPane fx:id="fxGrid" styleClass="grid"/>
     <HBox>
-        <VBox fx:id="fxLabelContainer" styleClass="labels">
-            <Label fx:id="fxLabel1" />
+        <VBox styleClass="labels">
+            <Label fx:id="fxLabel0" />
             <Region VBox.vgrow="ALWAYS" />
+            <Label fx:id="fxLabel1" />
+        </VBox>
+        <VBox styleClass="labels">
             <Label fx:id="fxLabel2" />
+            <Region VBox.vgrow="ALWAYS" />
+            <Label fx:id="fxLabel3" />
         </VBox>
         <Region maxWidth="2" minWidth="2" />
         <Button fx:id="fxButton" onAction="#nyrLeikurHandler" onMousePressed="#buttonClicked" onMouseReleased="#buttonReleased" prefHeight="75" prefWidth="75" styleClass="button" text="Nýr leikur" />

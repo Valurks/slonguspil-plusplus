@@ -191,7 +191,7 @@ public class SettingsDialogController {
         bots = originalBots.clone();
     }
 
-    public void onOpen() {
+    public void open() {
         initializeDialog();
         dialog.showAndWait();
     }

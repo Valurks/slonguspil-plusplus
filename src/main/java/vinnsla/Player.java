@@ -6,12 +6,12 @@ import javafx.beans.property.SimpleStringProperty;
 public class Player {
 
     private final SimpleIntegerProperty tile;
-    private SimpleStringProperty name;
+    private final SimpleStringProperty name;
     private final SimpleStringProperty message;
     private final int max;
-    private boolean isBot;
+    private final boolean isBot;
 
-    public Player(String name, int max, Boolean isBot) {
+    Player(String name, int max, Boolean isBot) {
         this.name = new SimpleStringProperty(name);
         this.max = max;
         this.isBot = isBot;
@@ -60,9 +60,5 @@ public class Player {
 
     public boolean isBot() {
         return isBot;
-    }
-
-    public void setBot(boolean isBot) {
-        this.isBot = isBot;
     }
 }

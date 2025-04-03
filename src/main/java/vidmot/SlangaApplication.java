@@ -17,6 +17,7 @@ public class SlangaApplication extends Application {
         stage.setTitle("Slönguspil");
         stage.setScene(scene);
         stage.show();
+        GifLoader.init();
     }
 
     public static void main(String[] args) {

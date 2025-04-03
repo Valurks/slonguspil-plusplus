@@ -5,24 +5,24 @@ import java.util.HashMap;
 public class SnakesAndLadders {
 
     private final HashMap<Integer, Integer> snakesAndLadders;
-    private int difficulty = 1;
+    private final double difficulty;
     private int max;
 
-    SnakesAndLadders() {
+    SnakesAndLadders(double difficulty) {
         snakesAndLadders = new HashMap<>();
-
+        this.difficulty = difficulty;
     }
 
-    public int newTile(Player player, Game game) {
+    public int newTile(Player player) {
         int gamli = player.getTile();
         int nyi = snakesAndLadders.getOrDefault(gamli, 0);
         if (nyi == 0) {
             return gamli;
         } else if (nyi > gamli) {
 
-            game.setMessage(player.getName() + " fór upp stigann!");
+            player.setMessage(player.getName() + " fór upp stigann!");
         } else {
-            game.setMessage(player.getName() + " fór niður snákinn :(");
+            player.setMessage(player.getName() + " fór niður snákinn :(");
         }
         return nyi;
     }
@@ -38,8 +38,7 @@ public class SnakesAndLadders {
         }
         // randomPosNeg er random tala milli -1 og 1
         double randomPosNeg = Math.random()*difficulty*2-1;
-        System.out.println(randomPosNeg);
-        int numberOfSL = (int) (difficulty*max/4.0 + randomPosNeg*max/12);
+        int numberOfSL = (int) (difficulty*max/6.0 + randomPosNeg*max/12);
         for (int i = 0; i < numberOfSL; i++ ) {
             insert();
         }
@@ -48,7 +47,6 @@ public class SnakesAndLadders {
     private void insert() {
         int tile = findValidTile();
         int destination = findValidDestinaton(tile);
-        System.out.println(tile +" "+ destination);
         snakesAndLadders.put(tile, destination);
     }
 
@@ -70,11 +68,6 @@ public class SnakesAndLadders {
              return findValidDestinaton(tile);
          }
         return destination;
-    }
-
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-        createMap();
     }
 
     public void setSize(int max) {
