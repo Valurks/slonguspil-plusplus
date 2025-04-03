@@ -119,13 +119,13 @@ public class SettingsDialogController {
 
     private void createButtons(){
         HBox buttonBox = new HBox();
-        Button confirmButton = new Button("Opna");
-        Button closeButton = new Button("Loka");
+        Button confirmButton = new Button("Halda áfram");
+        Button closeButton = new Button("Hætta við");
         confirmButton.setOnAction(event -> {
             save();
             createResult();
         });
-        closeButton.setOnAction(event -> createResult());
+        closeButton.setOnAction(event -> dialog.setResult(new String[1][1]));
 
         buttonBox.getChildren().addAll(closeButton, confirmButton);
         mainView.getChildren().add(buttonBox);
@@ -154,6 +154,9 @@ public class SettingsDialogController {
         bot.setId(id+"");
         bot.setSelected(bots[id]);
         bot.selectedProperty().addListener((obs, oldval, newval) -> bots[id] = newval);
+        if (id==0) {
+            bot.setDisable(true);
+        }
 
         mainBox.getChildren().addAll(playerName,bot);
         return mainBox;

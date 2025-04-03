@@ -31,8 +31,8 @@ HBox {
 }
 
 .labels Label {
-    -fx-min-width: 229;
-    -fx-max-width: 229;
+    -fx-min-width: 150;
+    -fx-max-width: 150;
     -fx-min-height: 35;
     -fx-max-height: 35;
 

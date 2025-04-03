@@ -1,6 +1,7 @@
 package vidmot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import javafx.application.Platform;
@@ -39,7 +40,9 @@ public class SlangaController {
     private Dice dice;
     private final SettingsDialogController settingsDialog =
         new SettingsDialogController();
-    private double[] settings;
+    private double[] settings = new double[]{2.0,24.0,1.0};
+    private String[] playerNames = new String[4];
+    private boolean[] bots = new boolean[4];
     private Player[] players;
     private Image[] icons = GifLoader.getIcons();
     private ImageView[] playerIcons;
@@ -49,6 +52,8 @@ public class SlangaController {
     ArrayList<Label> labels = new ArrayList<>();
 
     public void initialize() {
+        Arrays.fill(playerNames, "Ónefndur leikmaður");
+        Arrays.fill(bots, false);
         settingsHandler();
         createGame();
     }
@@ -60,11 +65,12 @@ public class SlangaController {
         }
     }
 
-    private void settingsHandler() {
+    private int settingsHandler() {
         settingsDialog.open();
+        if(settingsDialog.getResult()[0][0]==null) return 1;
         settings = new double[3];
-        String[] playerNames = new String[4];
-        boolean[] bots = new boolean[4];
+        playerNames = new String[4];
+        bots = new boolean[4];
         for (int i = 0; i < 4; i++) {
             if (i < 3) {
                 settings[i] = Double.parseDouble(
@@ -74,7 +80,10 @@ public class SlangaController {
             playerNames[i] = settingsDialog.getResult()[1][i];
             bots[i] = Boolean.parseBoolean(settingsDialog.getResult()[2][i]);
         }
+        return 0;
+    }
 
+    public void createGame() {
         game = new Game(GRID_ROW, GRID_COL,settings[2]);
         for (int i = 0; i < settings[0]; i++) {
             game.addPlayer(playerNames[i], bots[i], i);
@@ -82,9 +91,6 @@ public class SlangaController {
         players = game.getPlayers();
         game.newGame();
         dice = game.getDice();
-    }
-
-    public void createGame() {
         playerIcons = new ImageView[4];
         createGrid();
         createListener();
@@ -100,6 +106,7 @@ public class SlangaController {
 
         visualSnakesLadders();
         bindLabels();
+       updatePosition(players[0],playerIcons[0]);
     }
 
     private void createPlayers() {
@@ -186,9 +193,11 @@ public class SlangaController {
     }
 
     public void nyrLeikurHandler() {
+        if (settingsHandler()!=0) {
+            return;
+        }
         finished = false;
         buttonReleased();
-        settingsHandler();
         createGame();
         for (int i = 0; i < settings[0]; i++) {
             players[i].setMessage("");
@@ -234,8 +243,8 @@ public class SlangaController {
                     }
                 }
                 for (int j = 0; j < iconsOnTile.size(); j++) {
-                    iconsOnTile.get(j).toFront();
-                    iconsOnTile.get(j).setTranslateX((double) (offset * 10) /2-10*j);
+                    iconsOnTile.get(iconsOnTile.size()-j-1).toFront();
+                    iconsOnTile.get(j).setTranslateX((double) (-offset * 10) /2+10*j);
                 }
             } else {
                 icon.setTranslateX(0);
