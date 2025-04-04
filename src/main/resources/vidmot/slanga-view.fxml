@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.GridPane?>
@@ -10,24 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" spacing="20.0" styleClass="window" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.SlangaController">
-    <GridPane fx:id="fxGrid" styleClass="grid"/>
-    <HBox>
-        <VBox styleClass="labels">
-            <Label fx:id="fxLabel0" />
-            <Region VBox.vgrow="ALWAYS" />
-            <Label fx:id="fxLabel1" />
-        </VBox>
+        <GridPane fx:id="fxGrid" styleClass="grid"/>
+    <HBox alignment="CENTER" prefWidth="Infinity">
         <Region HBox.hgrow="ALWAYS" />
-        <VBox styleClass="labels">
-            <Label fx:id="fxLabel2" />
-            <Region VBox.vgrow="ALWAYS" />
-            <Label fx:id="fxLabel3" />
-        </VBox>
-        <Region HBox.hgrow="ALWAYS" />
+        <VBox fx:id="fxLabels" styleClass="labels" spacing="5"/>
+        <Region minWidth="10" />
         <Button fx:id="fxButton" onAction="#nyrLeikurHandler" onMousePressed="#buttonClicked" onMouseReleased="#buttonReleased" prefHeight="75" prefWidth="75" styleClass="button" text="Nýr leikur" />
-        <Region HBox.hgrow="ALWAYS" />
+        <Region minWidth="10" />
         <ImageView fx:id="fxDice" fitHeight="75" fitWidth="75" onMousePressed="#diceHandler" pickOnBounds="true" preserveRatio="true">
             <Image url="@images/dice/0.png" />
         </ImageView>
+        <Region HBox.hgrow="ALWAYS" />
     </HBox>
 </VBox>

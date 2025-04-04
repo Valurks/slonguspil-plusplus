@@ -11,9 +11,9 @@ public class SlangaApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SlangaApplication.class.getResource("upphaf-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 520);
+        Scene scene = new Scene(fxmlLoader.load(), 900, 850);
         ViewSwitcher.setScene(scene);
-//        stage.setResizable(false);
+        stage.setResizable(false);
         stage.setTitle("Slönguspil");
         stage.setScene(scene);
         stage.show();

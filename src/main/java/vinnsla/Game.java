@@ -26,8 +26,7 @@ public class Game {
 
     public Game(int height, int width, double difficulty) {
         max = height * width;
-        snakesAndLadders = new SnakesAndLadders(difficulty);
-        snakesAndLadders.setSize(max);
+        snakesAndLadders = new SnakesAndLadders(difficulty,max);
     }
 
     public Player[] getPlayers() {

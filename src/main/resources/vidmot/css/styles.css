@@ -1,16 +1,8 @@
 
-.grid Label {
-    -fx-min-width: 75;
-    -fx-max-width: 75;
-    -fx-min-height: 75;
-    -fx-max-height: 75;
-}
-
 .grid {
     -fx-hgap: 2;
     -fx-vgap: 2;
-    -fx-max-width: 460;
-    -fx-min-width: 460;
+    -fx-alignment: center;
 }
 
 .dices {
@@ -21,8 +13,8 @@
 }
 
 HBox {
-    -fx-max-width: 460;
-    -fx-min-width: 460;
+    /*-fx-max-width: 460;*/
+    /*-fx-min-width: 460;*/
     -fx-alignment: center;
 }
 
@@ -31,11 +23,22 @@ HBox {
 }
 
 .labels Label {
-    -fx-min-width: 150;
-    -fx-max-width: 150;
+    -fx-pref-width: 250;
     -fx-min-height: 35;
     -fx-max-height: 35;
+}
 
+.labels HBox {
+    -fx-spacing: 10;
+}
+
+.grid Label {
+    -fx-min-width: 75;
+    -fx-max-width: 75;
+    -fx-min-height: 75;
+    -fx-max-height: 75;
+    -fx-background-insets: 1;
+    -fx-background-radius: 4;
 }
 
 .grid Label, .button, .labels Label, ImageView {
@@ -51,4 +54,8 @@ HBox {
 
 ImageView {
     -fx-alignment: center;
+}
+
+.test {
+    -fx-background-color: yellow;
 }

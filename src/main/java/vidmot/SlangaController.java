@@ -13,30 +13,24 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import vinnsla.Dice;
 import vinnsla.Game;
 import vinnsla.Player;
 
 public class SlangaController {
 
-    private static final int GRID_ROW = 4;
-    private static final int GRID_COL = 6;
+    private int rows;
+    private int cols;
 
     public ImageView fxDice;
     public Button fxButton;
-    public Label fxLabel0;
-    public Label fxLabel3;
-
+    public VBox fxLabels;
     @FXML
     private GridPane fxGrid;
 
-    @FXML
-    private Label fxLabel1;
-
-    @FXML
-    private Label fxLabel2;
-
-    private Game game = new Game(GRID_ROW, GRID_COL, 1.0);
+    private Game game = new Game(rows, cols, 1.0);
     private Dice dice;
     private final SettingsDialogController settingsDialog =
         new SettingsDialogController();
@@ -54,15 +48,33 @@ public class SlangaController {
     public void initialize() {
         Arrays.fill(playerNames, "Ónefndur leikmaður");
         Arrays.fill(bots, false);
+        findValidBoardSize((int) settings[1]);
         settingsHandler();
         createGame();
     }
 
-    private void bindLabels() {
-        Label[] playerLabels = new Label[] { fxLabel0, fxLabel1, fxLabel2, fxLabel3 };
+    private void createLabels() {
+        fxLabels.getChildren().clear();
+        Label[] playerLabels = new Label[(int) settings[0]];
+        for (int i = 0; i < playerLabels.length; i++ ) {
+            playerLabels[i] = new Label(playerNames[i]);
+        }
+        HBox upper = new HBox();
+        HBox lower = new HBox();
+
+        if (settings[0] == 2) {
+            upper.getChildren().add(playerLabels[0]);
+            lower.getChildren().add(playerLabels[1]);
+        } else {
+            upper.getChildren().addAll(playerLabels[0],playerLabels[1]);
+            for (int i = 2; i < playerLabels.length; i++) {
+                lower.getChildren().add(playerLabels[i]);
+            }
+        }
         for (int i = 0; i < settings[0]; i++) {
             playerLabels[i].textProperty().bind(players[i].getMessage());
         }
+        fxLabels.getChildren().addAll(upper, lower);
     }
 
     private int settingsHandler() {
@@ -80,11 +92,12 @@ public class SlangaController {
             playerNames[i] = settingsDialog.getResult()[1][i];
             bots[i] = Boolean.parseBoolean(settingsDialog.getResult()[2][i]);
         }
+        findValidBoardSize((int) settings[1]);
         return 0;
     }
 
     public void createGame() {
-        game = new Game(GRID_ROW, GRID_COL,settings[2]);
+        game = new Game(rows, cols, settings[2]);
         for (int i = 0; i < settings[0]; i++) {
             game.addPlayer(playerNames[i], bots[i], i);
         }
@@ -105,8 +118,9 @@ public class SlangaController {
         game.setOnBotTurn(() -> Platform.runLater(this::diceHandler));
 
         visualSnakesLadders();
-        bindLabels();
-       updatePosition(players[0],playerIcons[0]);
+        createLabels();
+        updatePosition(players[0],playerIcons[0]);
+        fxGrid.getWidth();
     }
 
     private void createPlayers() {
@@ -125,6 +139,12 @@ public class SlangaController {
         }
     }
 
+    private void findValidBoardSize(int size) {
+        rows = (int) Math.round(Math.sqrt(size)-0.9);
+        cols = (int) Math.round((float) size / rows);
+        settings[1] = rows*cols;
+    }
+
     /**
      * Núna hægt að breyta gridpane
      */
@@ -141,16 +161,13 @@ public class SlangaController {
     public void createGrid() {
         fxGrid.getChildren().clear();
         String[] colors = new String[] {
-            "FF8080",
-            "F6FDC3",
-            "FFCF96",
-            "CDFAD5",
+            "FF8080", "F6FDC3", "FFCF96", "CDFAD5",
         };
-        for (int i = 0; i < GRID_ROW; i++) {
-            for (int j = 0; j < GRID_COL; j++) {
-                int col = (i % 2 == 0) ? j : GRID_COL - j - 1; // Ef oddatölu röð -> byrja fra hægri
-                int row = GRID_ROW - i - 1; // Byrja niðri
-                int index = i * GRID_COL + j + 1;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                int col = (i % 2 == 0) ? j : cols - j - 1; // Ef oddatölu röð -> byrja fra hægri
+                int row = rows - i - 1; // Byrja niðri
+                int index = i * cols + j + 1;
                 labels.add(new Label(index + ""));
                 Label label = labels.get(index - 1);
                 label.setStyle(
@@ -187,7 +204,7 @@ public class SlangaController {
         } else if (utkoma == 1) {
             String winner =
                 game.getNextPlayer().getName() + " er kominn í mark!";
-            game.setMessage(winner);
+            game.getNextPlayer().setMessage(winner);
             finished = true;
         }
     }

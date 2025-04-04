@@ -3,6 +3,7 @@ package vidmot;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
@@ -38,9 +39,13 @@ public class SettingsDialogController {
         mainView = new VBox();
         dialog = new Dialog<>();
         DialogPane dialogPane = new DialogPane();
+        dialogPane.setMinHeight(400);
+        dialogPane.setMinWidth(400);
+        mainView.setSpacing(20);
+        mainView.getChildren().add(new Region());
 
         createPlayerSlider();
-
+        createBoardSizeSelector();
         createDifficultySelector();
         createButtons();
 
@@ -55,8 +60,7 @@ public class SettingsDialogController {
     private void createPlayerSlider(){
         VBox playerBox = new VBox();
         Label playersLabel = new Label("Number of players");
-        Slider playerSlider = new Slider(2, 4, 2);
-        playerSlider.setValue(settings[0]);
+        Slider playerSlider = new Slider(2, 4, settings[0]);
         playerSlider.setShowTickMarks(true);
         playerSlider.setMajorTickUnit(1f);
         playerSlider.setShowTickLabels(true);
@@ -77,7 +81,24 @@ public class SettingsDialogController {
 
 
     private void createBoardSizeSelector(){
-        //slider?
+        VBox boardBox = new VBox();
+        Label boardLabel = new Label("Board Size");
+        Slider boardSlider = new Slider(15, 100, settings[1]);
+        boardSlider.setShowTickMarks(true);
+        boardSlider.setMajorTickUnit(25f);
+        boardSlider.setShowTickLabels(true);
+        boardSlider.setMinorTickCount(0);
+        boardSlider.valueProperty().addListener(
+                (obs, oldval, newVal) ->
+                {
+                    int value = (int) Math.round(newVal.doubleValue());
+                    boardSlider.setValue(value);
+                    settings[1] = value;
+                }
+        );
+
+        boardBox.getChildren().addAll(boardLabel, boardSlider);
+        mainView.getChildren().add(boardBox);
     }
 
     private void createDifficultySelector(){
@@ -105,6 +126,7 @@ public class SettingsDialogController {
                     String value = ((RadioButton)newval).getId();
                     settings[2] = difficultyMap.get(value);
                 });
+        difficultyBox.setSpacing(10);
         mainView.getChildren().add(difficultyBox);
     }
 
@@ -134,6 +156,7 @@ public class SettingsDialogController {
 
     private HBox createPlayerHBox(int id){
         HBox mainBox = new HBox();
+        mainBox.setSpacing(5);
         TextField playerName = new TextField();
         String defaultName = "Ónefndur leikmaður";
         if (playerNames[id].equals(defaultName)) {
@@ -164,6 +187,7 @@ public class SettingsDialogController {
 
     private VBox createPlayersInput() {
         VBox playersBox = new VBox();
+        playersBox.setSpacing(5);
         for (int i = 0; i < settings[0]; i++ ) {
             playersBox.getChildren().add(createPlayerHBox(i));
         }
