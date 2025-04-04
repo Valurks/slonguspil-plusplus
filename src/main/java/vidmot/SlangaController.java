@@ -100,6 +100,7 @@ public class SlangaController {
         game = new Game(rows, cols, settings[2]);
         for (int i = 0; i < settings[0]; i++) {
             game.addPlayer(playerNames[i], bots[i], i);
+
         }
         players = game.getPlayers();
         game.newGame();

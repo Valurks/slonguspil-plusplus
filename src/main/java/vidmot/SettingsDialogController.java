@@ -198,9 +198,11 @@ public class SettingsDialogController {
 
     private void createResult() {
         String[][] result = new String[3][4];
-        for (int i = 0; i < 3; i++) {
-            result[0][i] = originalSettings[i] + "";
+        for (int i = 0; i < 4; i++) {
+            if(i < 3)
+                result[0][i] = originalSettings[i] + "";
             result[2][i] = bots[i] + "";
+
         }
         result[1] = playerNames.clone();
         dialog.setResult(result);
