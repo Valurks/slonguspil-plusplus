@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="520.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.UpphafController">
-      <VBox alignment="CENTER" prefHeight="520.0" prefWidth="520.0">
-            <Button fx:id="fxByrja" mnemonicParsing="false" onAction="#onByrja" text="Byrja" />
-      </VBox>
+    <VBox alignment="CENTER" prefHeight="520.0" prefWidth="520.0">
+        <Button fx:id="fxByrja" mnemonicParsing="false" onAction="#onByrja" text="Byrja" />
+    </VBox>
 </AnchorPane>
