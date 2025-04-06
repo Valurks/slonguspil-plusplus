@@ -1,8 +1,8 @@
 package vinnsla;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
 import java.nio.charset.StandardCharsets;
@@ -21,8 +21,6 @@ public class Game {
     private int currentPlayerIndex = 0;
     private Runnable onBotTurn;
     private final SimpleBooleanProperty botTurn = new SimpleBooleanProperty(false);
-
-    private final SimpleStringProperty message = new SimpleStringProperty("");
 
     public Game(int height, int width, double difficulty) {
         max = height * width;
@@ -46,6 +44,10 @@ public class Game {
         return nextPlayer;
     }
 
+    public void setNextPlayer(Player player){
+        nextPlayer = player;
+    }
+
     public HashMap<Integer, Integer> getSlongurStigar() {
         return snakesAndLadders.getSnakesAndLadders();
     }
@@ -60,11 +62,9 @@ public class Game {
             }
         }
         nextPlayer = players[0];
-        message.set("");
     }
 
     public int round() {
-        message.set("");
         if (nextPlayer == null) return -1;
         dice.throwDice();
         if (nextPlayer.move(dice.getNumber())) return 1;
@@ -83,6 +83,7 @@ public class Game {
 
     private void handleBotRound() {
         botTurn.set(true);
+        Platform.runLater(() -> {
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> {
             onBotTurn.run();
@@ -90,6 +91,7 @@ public class Game {
         });
 
         pause.play();
+        });
     }
 
     public SimpleBooleanProperty botTurnProperty() {
@@ -98,6 +100,9 @@ public class Game {
 
     public void setOnBotTurn(Runnable onBotTurn) {
         this.onBotTurn = onBotTurn;
+    }
+    public SnakesAndLadders getSnakesAndLadders(){
+        return snakesAndLadders;
     }
 
 
@@ -113,12 +118,7 @@ public class Game {
                 return;
             }
             System.out.print("Á næsti leikmaður að gera?");
-//            svar = scanner.next();
         }
 
-    }
-
-    public void setMessage(String message) {
-        this.message.set(message);
     }
 }
