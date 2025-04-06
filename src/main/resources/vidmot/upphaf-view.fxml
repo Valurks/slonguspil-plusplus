@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="520.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.UpphafController">
     <VBox alignment="CENTER" prefHeight="520.0" prefWidth="520.0">
+        <ImageView fx:id="fxSnake1" fitHeight="151.0" fitWidth="158.0" preserveRatio="true">
+            <image>
+                <Image url="@images/snakes/snake1.png" />
+            </image>
+            <VBox.margin>
+                <Insets right="200.0" />
+            </VBox.margin>
+        </ImageView>
         <Button fx:id="fxByrja" mnemonicParsing="false" onAction="#onByrja" text="Byrja" />
+    <ImageView fx:id="fxSnake2" fitHeight="150.0" fitWidth="141.0" preserveRatio="true">
+        <image>
+            <Image url="@images/snakes/snake1.png" />
+        </image>
+        <VBox.margin>
+            <Insets left="200.0" />
+        </VBox.margin>
+    </ImageView>
     </VBox>
 </AnchorPane>
