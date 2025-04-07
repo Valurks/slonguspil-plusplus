@@ -1,0 +1,7 @@
+.backgroundPane {
+    -fx-background-image: url("../images/upphafsskjar/upphafsmynd.png");
+    -fx-background-size: cover;
+}
+.button {
+    -fx-background-color: transparent;
+}

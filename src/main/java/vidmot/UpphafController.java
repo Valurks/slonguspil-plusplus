@@ -2,11 +2,16 @@ package vidmot;
 
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
 import javafx.util.Duration;
+
+import java.util.Objects;
 
 /**
  * Nafn: Hjörleifur Örn Sveinsson
@@ -16,57 +21,74 @@ import javafx.util.Duration;
 public class UpphafController {
     public ImageView fxSnake1;
     public ImageView fxSnake2;
+    public Button fxByrja;
 
-    public void initialize(){
+    public void initialize() {
         animatesnakes();
+        setStartButton();
+    }
+
+    private void setStartButton() {
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vidmot/images/upphafsskjar/StartButton.png")));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(150);
+        fxByrja.setGraphic(imageView);
+        fxByrja.setOnMouseEntered(e -> {
+            fxByrja.setScaleX(1.1);
+            fxByrja.setScaleY(1.1);
+        });
+
+        fxByrja.setOnMouseExited(e -> {
+            fxByrja.setScaleX(1.0);
+            fxByrja.setScaleY(1.0);
+        });
     }
 
     private void animatesnakes() {
         Path path = new Path();
         path.getElements().add(new MoveTo(-200, 250));
         fxSnake1.setScaleX(-1);
-        //Curves ma laga
-        path.getElements().add(new QuadCurveTo(50, 300, 100, 250));
-        path.getElements().add(new QuadCurveTo(150, 320, 200, 270));
-        path.getElements().add(new QuadCurveTo(250, 320, 300, 270));
-        path.getElements().add(new QuadCurveTo(350, 240, 400, 200));
-        path.getElements().add(new QuadCurveTo(450, 150, 500, 100));
-        path.getElements().add(new QuadCurveTo(550, 50, 600, 50));
-        path.getElements().add(new QuadCurveTo(650, 0, 700, 50));
-        path.getElements().add(new QuadCurveTo(750, 100, 800, 150));
-        path.getElements().add(new QuadCurveTo(850, 200, 900, 150));
-        path.getElements().add(new QuadCurveTo(950, 100, 1000, 50));
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setNode(fxSnake1);
-        pathTransition.setDuration(Duration.seconds(9));
-        pathTransition.setPath(path);
-        pathTransition.setCycleCount(PathTransition.INDEFINITE);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setInterpolator(Interpolator.LINEAR);
-        pathTransition.play();
+
+        path.getElements().add(new QuadCurveTo(150, 300, 250, 200));
+        path.getElements().add(new QuadCurveTo(350, 100, 450, 200));
+        path.getElements().add(new QuadCurveTo(550, 300, 650, 200));
+        path.getElements().add(new QuadCurveTo(750, 100, 850, 200));
+        path.getElements().add(new QuadCurveTo(950, 300, 950, 200));
+        path.getElements().add(new QuadCurveTo(1150, 100, 1050, 200));
+        PathTransition pathTransition1 = new PathTransition();
+        setPath(fxSnake1,pathTransition1,path);
 
         //snakur 2
         Path path2 = new Path();
         fxSnake2.setScaleX(-1);
-        path2.getElements().add(new MoveTo(800, 0));
-        path2.getElements().add(new QuadCurveTo(750, 100, 700, 150));
-        path2.getElements().add(new QuadCurveTo(650, 200, 600, 150));
-        path2.getElements().add(new QuadCurveTo(550, 250, 500, 200));
-        path2.getElements().add(new QuadCurveTo(450, 300, 400, 250));
-        path2.getElements().add(new QuadCurveTo(350, 350, 300, 300));
-        path2.getElements().add(new QuadCurveTo(250, 400, 200, 350));
-        path2.getElements().add(new QuadCurveTo(150, 450, 100, 400));
-        path2.getElements().add(new QuadCurveTo(50, 500, 0, 450));
-        path2.getElements().add(new QuadCurveTo(-100, 600, -150, 650));
+        path2.getElements().add(new MoveTo(800, 600));
 
+
+        path2.getElements().add(new QuadCurveTo(700, 450, 600, 400));
+        path2.getElements().add(new QuadCurveTo(500, 300, 400, 400));
+        path2.getElements().add(new QuadCurveTo(300, 500, 200, 400));
+        path2.getElements().add(new QuadCurveTo(100, 300, 0, 400));
+        path2.getElements().add(new QuadCurveTo(-100, 550, -200, 400));
+        path2.getElements().add(new QuadCurveTo(-300, 300, -400, 400));
+
+        path2.setStroke(Color.DARKSEAGREEN);
+        path2.setStrokeWidth(12);
+        path2.setFill(null);
         PathTransition pathTransition2 = new PathTransition();
-        pathTransition2.setNode(fxSnake2);
-        pathTransition2.setDuration(Duration.seconds(8));
-        pathTransition2.setPath(path2);
-        pathTransition2.setCycleCount(PathTransition.INDEFINITE);
-        pathTransition2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setInterpolator(Interpolator.LINEAR);
+        setPath(fxSnake2,pathTransition2,path2);
+
+
+        pathTransition1.play();
         pathTransition2.play();
+    }
+    private void setPath(ImageView snake, PathTransition pathTransition, Path path){
+        pathTransition.setNode(snake);
+        pathTransition.setDuration(Duration.seconds(11));
+        pathTransition.setPath(path);
+        pathTransition.setCycleCount(PathTransition.INDEFINITE);
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setInterpolator(Interpolator.LINEAR);
     }
 
 
