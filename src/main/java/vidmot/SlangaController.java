@@ -38,8 +38,9 @@ public class SlangaController {
     private String[] playerNames = new String[4];
     private boolean[] bots = new boolean[4];
     private Player[] players;
-    private Image[] icons = GifLoader.getIcons();
+    private final Image[] icons = GifLoader.getIcons();
     private ImageView[] playerIcons;
+    private Label[] playerLabels;
 
     private boolean finished = false;
 
@@ -55,10 +56,12 @@ public class SlangaController {
 
     private void createLabels() {
         fxLabels.getChildren().clear();
-        Label[] playerLabels = new Label[(int) settings[0]];
+        playerLabels = new Label[(int) settings[0]];
         for (int i = 0; i < playerLabels.length; i++ ) {
             playerLabels[i] = new Label(playerNames[i]);
         }
+        String[] colors = new String[]{"2994EF","EA1D36","f8ba00","00d900"};
+
         HBox upper = new HBox();
         HBox lower = new HBox();
 
@@ -72,7 +75,9 @@ public class SlangaController {
             }
         }
         for (int i = 0; i < settings[0]; i++) {
+//            players[i].setMessage(playerNames[i]);
             playerLabels[i].textProperty().bind(players[i].getMessage());
+            playerLabels[i].setStyle( "-fx-border-color: #" + colors[i]+";");
         }
         fxLabels.getChildren().addAll(upper, lower);
     }
@@ -161,6 +166,7 @@ public class SlangaController {
 
     public void createGrid() {
         fxGrid.getChildren().clear();
+        labels.clear();
         String[] colors = new String[] {
             "FF8080", "F6FDC3", "FFCF96", "CDFAD5",
         };
@@ -206,6 +212,11 @@ public class SlangaController {
             String winner =
                 game.getNextPlayer().getName() + " er kominn í mark!";
             game.getNextPlayer().setMessage(winner);
+            for (int i = 0; i < settings[0]; i++) {
+                if (players[i]!=game.getNextPlayer()) {
+                    playerLabels[i].getStyleClass().add("loser");
+                }
+            }
             finished = true;
         }
     }
@@ -217,9 +228,6 @@ public class SlangaController {
         finished = false;
         buttonReleased();
         createGame();
-        for (int i = 0; i < settings[0]; i++) {
-            players[i].setMessage("");
-        }
     }
 
     public void buttonClicked() {

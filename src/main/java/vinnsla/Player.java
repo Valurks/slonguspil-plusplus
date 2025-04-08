@@ -16,7 +16,7 @@ public class Player {
         this.max = max;
         this.isBot = isBot;
         tile = new SimpleIntegerProperty(1);
-        message = new SimpleStringProperty("");
+        message = new SimpleStringProperty(name);
     }
 
     public boolean move(int kast) {

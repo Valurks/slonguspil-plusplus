@@ -13,8 +13,6 @@
 }
 
 HBox {
-    /*-fx-max-width: 460;*/
-    /*-fx-min-width: 460;*/
     -fx-alignment: center;
 }
 
@@ -32,6 +30,7 @@ HBox {
     -fx-spacing: 10;
 }
 
+
 .grid Label {
     -fx-min-width: 75;
     -fx-max-width: 75;
@@ -48,14 +47,16 @@ HBox {
     -fx-alignment: center;
 }
 
-.window {
+.backgroundPane {
     -fx-background-color: #f6fff8;
+    /*-fx-background-image: url("../images/upphafsskjar/upphafsmynd.png");*/
+    -fx-background-size: cover;
 }
 
 ImageView {
     -fx-alignment: center;
 }
 
-.test {
-    -fx-background-color: yellow;
+.loser {
+    -fx-text-fill: #8C8C8C;
 }

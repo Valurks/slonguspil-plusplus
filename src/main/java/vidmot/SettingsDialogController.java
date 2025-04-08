@@ -37,10 +37,13 @@ public class SettingsDialogController {
     private void initializeDialog() {
         load();
         mainView = new VBox();
+        HBox mainViewContainer = new HBox();
         dialog = new Dialog<>();
         DialogPane dialogPane = new DialogPane();
-        dialogPane.setMinHeight(400);
-        dialogPane.setMinWidth(400);
+        dialogPane.setMinHeight(500);
+        dialogPane.setMinWidth(500);
+        mainViewContainer.setMaxWidth(350);
+        mainViewContainer.setAlignment(Pos.CENTER);
         mainView.setSpacing(20);
         mainView.getChildren().add(new Region());
 
@@ -49,10 +52,11 @@ public class SettingsDialogController {
         createDifficultySelector();
         createButtons();
 
-        dialogPane.setContent(mainView);
+        mainViewContainer.getChildren().add(mainView);
+        dialogPane.setContent(mainViewContainer);
         dialogPane.getStylesheets().add(
                 getClass().getResource("css/styles.css").toExternalForm());
-        dialogPane.getStyleClass().add("root");
+        dialogPane.getStyleClass().add("backgroundPane");
         dialog.setDialogPane(dialogPane);
     }
 
