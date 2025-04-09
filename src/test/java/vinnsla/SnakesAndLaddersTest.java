@@ -1,5 +1,6 @@
 package vinnsla;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -12,20 +13,25 @@ import static org.junit.jupiter.api.Assertions.*;
  * Lýsing:
  */
 public class SnakesAndLaddersTest {
+    private Game game;
+    private SnakesAndLadders snakesAndLadders;
+    @BeforeEach
+    public void setUp() {
+        game = new Game(4, 6, 1.0);
+        snakesAndLadders = game.getSnakesAndLadders();
+    }
 
     @Test
     public void testCreateMap(){
-        SnakesAndLadders game = new SnakesAndLadders(1.0, 24);
-        game.createMap();
-        HashMap<Integer, Integer> map = game.getSnakesAndLadders();
+        SnakesAndLadders customBoard = new SnakesAndLadders(1.0, 24);
+        customBoard.createMap();
+        HashMap<Integer, Integer> map = customBoard.getSnakesAndLadders();
         assertFalse(map.isEmpty());
         assertTrue(map.keySet().stream().allMatch(tile -> tile >= 0 && tile <= 24));
     }
     @Test
     public void testLadder(){
-        Game game = new Game(4,6,1.0);
         game.setNextPlayer(new Player("Arnar", 24, true));
-        SnakesAndLadders snakesAndLadders = game.getSnakesAndLadders();
         snakesAndLadders.getSnakesAndLadders().put(2,20);
         Player player = game.getNextPlayer();
         player.move(1);
@@ -34,9 +40,7 @@ public class SnakesAndLaddersTest {
     }
     @Test
     public void testSnake(){
-        Game game = new Game(4,6,1.0);
         game.setNextPlayer(new Player("Petur", 24, true));
-        SnakesAndLadders snakesAndLadders = game.getSnakesAndLadders();
         snakesAndLadders.getSnakesAndLadders().put(18,4);
         Player player = game.getNextPlayer();
         player.move(17);

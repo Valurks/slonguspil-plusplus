@@ -6,8 +6,7 @@ package vidmot;
  * Lýsing:
  */
 public enum View {
-    GAME("slanga-view.fxml"),
-    HOME("upphaf-view.fxml");
+    GAME("slanga-view.fxml");
 
     private final String filename;
 

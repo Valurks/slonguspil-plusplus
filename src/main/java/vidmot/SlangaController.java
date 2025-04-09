@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -21,22 +22,25 @@ import vinnsla.Player;
 
 public class SlangaController {
 
-    private int rows;
-    private int cols;
-
-    public ImageView fxDice;
-    public Button fxButton;
-    public VBox fxLabels;
+    public static final int MAX_PLAYERS = 4;
+    public static final int SIZE_OF_ICONS = 50;
+    private int ROWS;
+    private int COLS;
+    @FXML
+    private ImageView fxDice;
+    @FXML
+    private Button fxButton;
+    @FXML
+    private VBox fxLabels;
     @FXML
     private GridPane fxGrid;
 
-    private Game game = new Game(rows, cols, 1.0);
+    private Game game = new Game(ROWS, COLS, 1.0);
     private Dice dice;
-    private final SettingsDialogController settingsDialog =
-        new SettingsDialogController();
-    private double[] settings = new double[]{2.0,24.0,1.0};
-    private String[] playerNames = new String[4];
-    private boolean[] bots = new boolean[4];
+    private final SettingsDialogController settingsDialog = new SettingsDialogController();
+    private double[] settings = new double[]{2.0, 24.0, 1.0};
+    private String[] playerNames = new String[MAX_PLAYERS];
+    private boolean[] bots = new boolean[MAX_PLAYERS];
     private Player[] players;
     private final Image[] icons = GifLoader.getIcons();
     private ImageView[] playerIcons;
@@ -57,10 +61,10 @@ public class SlangaController {
     private void createLabels() {
         fxLabels.getChildren().clear();
         playerLabels = new Label[(int) settings[0]];
-        for (int i = 0; i < playerLabels.length; i++ ) {
+        for (int i = 0; i < playerLabels.length; i++) {
             playerLabels[i] = new Label(playerNames[i]);
         }
-        String[] colors = new String[]{"2994EF","EA1D36","f8ba00","00d900"};
+        String[] colors = new String[]{"2994EF", "EA1D36", "f8ba00", "00d900"};
 
         HBox upper = new HBox();
         HBox lower = new HBox();
@@ -69,7 +73,7 @@ public class SlangaController {
             upper.getChildren().add(playerLabels[0]);
             lower.getChildren().add(playerLabels[1]);
         } else {
-            upper.getChildren().addAll(playerLabels[0],playerLabels[1]);
+            upper.getChildren().addAll(playerLabels[0], playerLabels[1]);
             for (int i = 2; i < playerLabels.length; i++) {
                 lower.getChildren().add(playerLabels[i]);
             }
@@ -77,22 +81,20 @@ public class SlangaController {
         for (int i = 0; i < settings[0]; i++) {
 //            players[i].setMessage(playerNames[i]);
             playerLabels[i].textProperty().bind(players[i].getMessage());
-            playerLabels[i].setStyle( "-fx-border-color: #" + colors[i]+";");
+            playerLabels[i].setStyle("-fx-border-color: #" + colors[i] + ";");
         }
         fxLabels.getChildren().addAll(upper, lower);
     }
 
     private int settingsHandler() {
         settingsDialog.open();
-        if(settingsDialog.getResult()[0][0]==null) return 1;
+        if (settingsDialog.getResult()[0][0] == null) return 1;
         settings = new double[3];
-        playerNames = new String[4];
-        bots = new boolean[4];
-        for (int i = 0; i < 4; i++) {
+        playerNames = new String[MAX_PLAYERS];
+        bots = new boolean[MAX_PLAYERS];
+        for (int i = 0; i < MAX_PLAYERS; i++) {
             if (i < 3) {
-                settings[i] = Double.parseDouble(
-                    settingsDialog.getResult()[0][i]
-                );
+                settings[i] = Double.parseDouble(settingsDialog.getResult()[0][i]);
             }
             playerNames[i] = settingsDialog.getResult()[1][i];
             bots[i] = Boolean.parseBoolean(settingsDialog.getResult()[2][i]);
@@ -102,7 +104,7 @@ public class SlangaController {
     }
 
     public void createGame() {
-        game = new Game(rows, cols, settings[2]);
+        game = new Game(ROWS, COLS, settings[2]);
         for (int i = 0; i < settings[0]; i++) {
             game.addPlayer(playerNames[i], bots[i], i);
 
@@ -110,22 +112,20 @@ public class SlangaController {
         players = game.getPlayers();
         game.newGame();
         dice = game.getDice();
-        playerIcons = new ImageView[4];
+        playerIcons = new ImageView[MAX_PLAYERS];
         createGrid();
         createListener();
         createPlayers();
         setPlayersPos();
 
-        game
-            .botTurnProperty()
-            .addListener((obs, oldVal, newVal) -> {
-                fxDice.setMouseTransparent(newVal);
-            });
+        game.botTurnProperty().addListener((obs, oldVal, newVal) -> {
+            fxDice.setMouseTransparent(newVal);
+        });
         game.setOnBotTurn(() -> Platform.runLater(this::diceHandler));
 
         visualSnakesLadders();
         createLabels();
-        updatePosition(players[0],playerIcons[0]);
+        updatePosition(players[0], playerIcons[0]);
         fxGrid.getWidth();
     }
 
@@ -135,8 +135,8 @@ public class SlangaController {
             playerIcons[i] = currentIcon;
             GridPane.setHalignment(currentIcon, HPos.CENTER);
             GridPane.setValignment(currentIcon, VPos.CENTER);
-            currentIcon.setFitHeight(50);
-            currentIcon.setFitWidth(50);
+            currentIcon.setFitHeight(SIZE_OF_ICONS);
+            currentIcon.setFitWidth(SIZE_OF_ICONS);
             currentIcon.pickOnBoundsProperty();
             currentIcon.preserveRatioProperty();
             fxGrid.getChildren().add(currentIcon);
@@ -146,9 +146,9 @@ public class SlangaController {
     }
 
     private void findValidBoardSize(int size) {
-        rows = (int) Math.round(Math.sqrt(size)-0.9);
-        cols = (int) Math.round((float) size / rows);
-        settings[1] = rows*cols;
+        ROWS = (int) Math.round(Math.sqrt(size) - 0.9);
+        COLS = (int) Math.round((float) size / ROWS);
+        settings[1] = ROWS * COLS;
     }
 
     /**
@@ -167,53 +167,33 @@ public class SlangaController {
     public void createGrid() {
         fxGrid.getChildren().clear();
         labels.clear();
-        String[] colors = new String[] {
-            "FF8080", "F6FDC3", "FFCF96", "CDFAD5",
-        };
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                int col = (i % 2 == 0) ? j : cols - j - 1; // Ef oddatölu röð -> byrja fra hægri
-                int row = rows - i - 1; // Byrja niðri
-                int index = i * cols + j + 1;
+        String[] colors = new String[]{"FF8080", "F6FDC3", "FFCF96", "CDFAD5"};
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                int col = (i % 2 == 0) ? j : COLS - j - 1;
+                int row = ROWS - i - 1;
+                int index = i * COLS + j + 1;
                 labels.add(new Label(index + ""));
                 Label label = labels.get(index - 1);
-                label.setStyle(
-                    "-fx-background-color: #" +
-                    colors[(int) (Math.random() * colors.length)] +
-                    ";"
-                );
+                label.setStyle("-fx-background-color: #" + colors[(int) (Math.random() * colors.length)] + ";");
                 fxGrid.add(label, col, row);
             }
         }
     }
 
     public void createListener() {
-        dice
-            .getProp()
-            .addListener(event ->
-                fxDice.setImage(
-                    new Image(
-                        Objects.requireNonNull(
-                            getClass()
-                                .getResourceAsStream(
-                                    "images/dice/" + dice.getNumber() + ".png"
-                                )
-                        )
-                    )
-                )
-            );
+        dice.getProp().addListener(event -> fxDice.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/dice/" + dice.getNumber() + ".png")))));
     }
 
     public void diceHandler() {
         int utkoma = game.round();
         if (utkoma == -1 || finished) {
-            nyrLeikurHandler();
+            newGameHandler();
         } else if (utkoma == 1) {
-            String winner =
-                game.getNextPlayer().getName() + " er kominn í mark!";
+            String winner = game.getNextPlayer().getName() + " er kominn í mark!";
             game.getNextPlayer().setMessage(winner);
             for (int i = 0; i < settings[0]; i++) {
-                if (players[i]!=game.getNextPlayer()) {
+                if (players[i] != game.getNextPlayer()) {
                     playerLabels[i].getStyleClass().add("loser");
                 }
             }
@@ -221,8 +201,8 @@ public class SlangaController {
         }
     }
 
-    public void nyrLeikurHandler() {
-        if (settingsHandler()!=0) {
+    public void newGameHandler() {
+        if (settingsHandler() != 0) {
             return;
         }
         finished = false;
@@ -239,47 +219,42 @@ public class SlangaController {
     }
 
     public void playerDisplayListener(Player player, ImageView icon) {
-        player
-            .getTileProp()
-            .addListener((observable, oldValue, newValue) -> {
-                Label label = labels.get(newValue.intValue() - 1);
-                int col = GridPane.getColumnIndex(label);
-                int row = GridPane.getRowIndex(label);
-                GridPane.setColumnIndex(icon, col);
-                GridPane.setRowIndex(icon, row);
-                updatePosition(player, icon);
-            });
+        player.getTileProp().addListener((observable, oldValue, newValue) -> {
+            Label label = labels.get(newValue.intValue() - 1);
+            int col = GridPane.getColumnIndex(label);
+            int row = GridPane.getRowIndex(label);
+            GridPane.setColumnIndex(icon, col);
+            GridPane.setRowIndex(icon, row);
+            updatePosition(player, icon);
+        });
     }
 
     public void updatePosition(Player player, ImageView icon) {
-            int offset = 0;
+        int offset = 0;
+        for (int j = 0; j < settings[0]; j++) {
+            if (player.getTile() == players[j].getTile() && icon != playerIcons[j]) {
+                offset++;
+            }
+        }
+        if (offset > 0) {
+            ArrayList<ImageView> iconsOnTile = new ArrayList<>();
             for (int j = 0; j < settings[0]; j++) {
-                if (
-                        player.getTile() == players[j].getTile() &&
-                                icon != playerIcons[j]
-                ) {
-                    offset++;
+                if (player.getTile() == players[j].getTile()) {
+                    iconsOnTile.add(playerIcons[j]);
                 }
             }
-            if (offset > 0) {
-                ArrayList<ImageView> iconsOnTile = new ArrayList<>();
-                for (int j = 0; j < settings[0]; j++) {
-                    if (player.getTile() == players[j].getTile()) {
-                        iconsOnTile.add(playerIcons[j]);
-                    }
-                }
-                for (int j = 0; j < iconsOnTile.size(); j++) {
-                    iconsOnTile.get(iconsOnTile.size()-j-1).toFront();
-                    iconsOnTile.get(j).setTranslateX((double) (-offset * 10) /2+10*j);
-                }
-            } else {
-                icon.setTranslateX(0);
-                icon.toFront();
+            for (int j = 0; j < iconsOnTile.size(); j++) {
+                iconsOnTile.get(iconsOnTile.size() - j - 1).toFront();
+                iconsOnTile.get(j).setTranslateX((double) (-offset * 10) / 2 + 10 * j);
             }
+        } else {
+            icon.setTranslateX(0);
+            icon.toFront();
+        }
     }
 
     public void visualSnakesLadders() {
-        HashMap<Integer, Integer> map = game.getSlongurStigar();
+        HashMap<Integer, Integer> map = game.getSnakesAndLaddersMap();
         for (int key : map.keySet()) {
             String img;
             int size;
@@ -300,11 +275,7 @@ public class SlangaController {
             view.setFitWidth(size);
             GridPane.setValignment(view, VPos.BOTTOM);
             GridPane.setHalignment(view, HPos.RIGHT);
-            view.setImage(
-                new Image(
-                    getClass().getResourceAsStream("images/" + img + ".png")
-                )
-            );
+            view.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/" + img + ".png"))));
             fxGrid.add(view, col, row);
         }
     }

@@ -15,7 +15,7 @@ public class Game {
     private final SnakesAndLadders snakesAndLadders;
     private Player nextPlayer;
     private final int max;
-    private int noPlayers;
+    private int numberOfPlayers;
 
     private final Player[] players = new Player[4];
     private int currentPlayerIndex = 0;
@@ -24,7 +24,7 @@ public class Game {
 
     public Game(int height, int width, double difficulty) {
         max = height * width;
-        snakesAndLadders = new SnakesAndLadders(difficulty,max);
+        snakesAndLadders = new SnakesAndLadders(difficulty, max);
     }
 
     public Player[] getPlayers() {
@@ -36,7 +36,7 @@ public class Game {
     }
 
     public void addPlayer(String name, boolean isBot, int index) {
-        Player player = new Player(name,max,isBot);
+        Player player = new Player(name, max, isBot);
         players[index] = player;
     }
 
@@ -44,21 +44,21 @@ public class Game {
         return nextPlayer;
     }
 
-    public void setNextPlayer(Player player){
+    public void setNextPlayer(Player player) {
         nextPlayer = player;
     }
 
-    public HashMap<Integer, Integer> getSlongurStigar() {
+    public HashMap<Integer, Integer> getSnakesAndLaddersMap() {
         return snakesAndLadders.getSnakesAndLadders();
     }
 
     public void newGame() {
         dice = new Dice();
-        noPlayers = 0;
+        numberOfPlayers = 0;
         for (Player player : players) {
             if (player != null) {
                 player.setTile(1);
-                noPlayers ++;
+                numberOfPlayers++;
             }
         }
         nextPlayer = players[0];
@@ -72,7 +72,7 @@ public class Game {
             nextPlayer.setTile(snakesAndLadders.newTile(nextPlayer));
         }
 
-        int i = (++currentPlayerIndex) % noPlayers;
+        int i = (++currentPlayerIndex) % numberOfPlayers;
         nextPlayer = players[i];
 
         //nextPlayer = nextPlayer == player1 ? player2 : player1;
@@ -84,13 +84,13 @@ public class Game {
     private void handleBotRound() {
         botTurn.set(true);
         Platform.runLater(() -> {
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(event -> {
-            onBotTurn.run();
-            botTurn.set(false);
-        });
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(event -> {
+                onBotTurn.run();
+                botTurn.set(false);
+            });
 
-        pause.play();
+            pause.play();
         });
     }
 
@@ -101,13 +101,14 @@ public class Game {
     public void setOnBotTurn(Runnable onBotTurn) {
         this.onBotTurn = onBotTurn;
     }
-    public SnakesAndLadders getSnakesAndLadders(){
+
+    public SnakesAndLadders getSnakesAndLadders() {
         return snakesAndLadders;
     }
 
 
     public static void main(String[] args) {
-        Game game = new Game(4, 6,1.0);
+        Game game = new Game(4, 6, 1.0);
         game.newGame();
         Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         System.out.print("Á næsti leikmaður að gera? ");

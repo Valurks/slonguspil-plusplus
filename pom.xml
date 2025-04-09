@@ -4,13 +4,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <url>https://github.com/Valurks/slonguspil-plusplus</url>
-
     <groupId>vidmot</groupId>
     <artifactId>slanga</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>slanga</name>
-    <description>Snakes and ladders game as final assignment in HBV201G</description>
+
+    <name>SlonguSpil++</name>
+
+    <url>https://github.com/Valurks/slonguspil-plusplus</url>
+
+    <description>A Java program to play snakes and ladders</description>
+    <organization>
+        <name>University of Iceland</name>
+        <url>https://www.hi.is</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>hjollsari</id>
+            <name>Hjörleifur Örn Sveinsson</name>
+            <email>hos40@hi.is</email>
+            <organization>University of Iceland</organization>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
@@ -40,6 +55,12 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -63,7 +84,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>3.12.1</version>
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
