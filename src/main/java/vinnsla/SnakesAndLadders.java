@@ -43,9 +43,11 @@ public class SnakesAndLadders {
             System.out.println("Board size not set");
             return;
         }
-        for (int i = 1; i <= max; i++) {
+        for (int i = 1;i <= max ;i++ ) {
             availableTiles.add(i);
         }
+        availableTiles.removeFirst();
+        availableTiles.removeLast();
         double randomPosNeg = Math.random() * difficulty * 2 - 1;
         int numberOfConnections = (int) (difficulty * max / 5.0 + randomPosNeg * Math.sqrt((double) max / 2));
         numberOfConnections = Math.min(numberOfConnections, (int) (max / MAX_CONNECTION_RATIO));
