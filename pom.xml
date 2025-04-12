@@ -9,19 +9,25 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>SlonguSpil++</name>
-
+    <description>A classic snakes and ladders game implemented in JavaFX with up to 4 players</description>
+    <inceptionYear>2025</inceptionYear>
     <url>https://github.com/Valurks/slonguspil-plusplus</url>
 
-    <description>A Java program to play snakes and ladders</description>
     <organization>
         <name>University of Iceland</name>
         <url>https://www.hi.is</url>
     </organization>
     <developers>
         <developer>
-            <id>hjollsari</id>
+            <id>Hjollsari</id>
             <name>Hjörleifur Örn Sveinsson</name>
             <email>hos40@hi.is</email>
+            <organization>University of Iceland</organization>
+        </developer>
+        <developer>
+            <id>Valurks</id>
+            <name>Valur Kristinn Starkaðarson</name>
+            <email>vks5@hi.is</email>
             <organization>University of Iceland</organization>
         </developer>
     </developers>
@@ -70,7 +76,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>vidmot.SlangaApplication</mainClass>
+                    <mainClass>vidmot.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -95,7 +101,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>vidmot.slanga/vidmot.SlangaApplication</mainClass>
+                            <mainClass>vidmot.slanga/vidmot.Main</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -103,6 +109,30 @@
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.1</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>vidmot.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
