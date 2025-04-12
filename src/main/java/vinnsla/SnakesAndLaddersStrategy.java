@@ -1,41 +1,29 @@
 package vinnsla;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
-public class SnakesAndLadders {
-
-    public static final int MAX_RECURSION = 25;
-    public static final double MAX_CONNECTION_RATIO = 2.5;
-    private final HashMap<Integer, Integer> snakesAndLadders;
-    private final double difficulty;
-    private final int max;
+/**
+ * Nafn: Hjörleifur Örn Sveinsson
+ * Gmail: hjorleifursveins@gmail.com
+ * Lýsing:
+ */
+public class SnakesAndLaddersStrategy implements BehaviorStrategy{
+    private final int MAX_RECURSION = 25;
+    private final double MAX_CONNECTION_RATIO = 2.5;
+    private double difficulty;
+    private int max;
     private int recursion = 0;
-    ArrayList<Integer> availableTiles = new ArrayList<>();
-
-    SnakesAndLadders(double difficulty, int max) {
-        snakesAndLadders = new HashMap<>();
+    private ArrayList<Integer> availableTiles;
+    private List<BoardConnections> connections;
+    @Override
+    public List<BoardConnections> generate(double difficulty, int max){
         this.difficulty = difficulty;
         this.max = max;
+        this.availableTiles = new ArrayList<>();
+        this.connections = new ArrayList<>();
         createMap();
-    }
-
-    public int newTile(Player player) {
-        int gamli = player.getTile();
-        int nyi = snakesAndLadders.getOrDefault(gamli, 0);
-        if (nyi == 0) {
-            return gamli;
-        } else if (nyi > gamli) {
-
-            player.setMessage(player.getName() + " fór upp stigann!");
-        } else {
-            player.setMessage(player.getName() + " fór niður snákinn :(");
-        }
-        return nyi;
-    }
-
-    public HashMap<Integer, Integer> getSnakesAndLadders() {
-        return snakesAndLadders;
+        return connections;
     }
 
     public void createMap() {
@@ -43,7 +31,7 @@ public class SnakesAndLadders {
             System.out.println("Board size not set");
             return;
         }
-        for (int i = 1;i <= max ;i++ ) {
+        for (int i = 1; i <= max; i++) {
             availableTiles.add(i);
         }
         availableTiles.removeFirst();
@@ -65,13 +53,15 @@ public class SnakesAndLadders {
         }
         availableTiles.remove(Integer.valueOf(tile));
         availableTiles.remove(Integer.valueOf(destination));
-        snakesAndLadders.put(tile, destination);
+        ConnectionType type = destination > tile ? ConnectionType.LADDER : ConnectionType.SNAKE;
+        connections.add(new BoardConnections(tile, destination, type));
     }
 
     private int findValidTile() {
         int tile = availableTiles.get((int) (Math.random() * availableTiles.size()));
-        if (snakesAndLadders.containsKey(tile) || snakesAndLadders.containsValue(tile)) {
-            return findValidTile();
+        for (BoardConnections connections : connections){
+            if (connections.to() == tile || connections.from() == tile)
+                return findValidTile();
         }
         return tile;
     }
@@ -81,14 +71,14 @@ public class SnakesAndLadders {
             recursion = 0;
             return -1;
         }
-
         boolean direction = Math.random() > Math.pow(difficulty, 1.4) * 0.4; //true upp, false niður
         int length = (int) (Math.random() * difficulty * 5 + 2); //lengd stiga/snáks
         length = direction ? length : -length;
         int destination = Math.min(Math.max(tile + length, 1), max);
 
-        if (snakesAndLadders.containsValue(destination) || snakesAndLadders.containsKey(destination)) {
-            return findValidDestinaton(tile);
+        for (BoardConnections connections : connections){
+            if (connections.to() == destination || connections.from() == destination)
+                return findValidDestinaton(tile);
         }
         return destination;
     }

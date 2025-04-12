@@ -12,45 +12,44 @@ import static org.junit.jupiter.api.Assertions.*;
  * Gmail: hjorleifursveins@gmail.com
  * Lýsing:
  */
-public class SnakesAndLaddersTest {
+public class BoardBehaviorTest {
     private Game game;
-    private SnakesAndLadders snakesAndLadders;
+    private BoardBehavior boardBehavior;
     @BeforeEach
     public void setUp() {
         game = new Game(4, 6, 1.0);
-        snakesAndLadders = game.getSnakesAndLadders();
+        boardBehavior = game.getSnakesAndLadders();
     }
 
     @Test
     public void testCreateMap(){
-        SnakesAndLadders customBoard = new SnakesAndLadders(1.0, 24);
-        customBoard.createMap();
-        HashMap<Integer, Integer> map = customBoard.getSnakesAndLadders();
+        HashMap<Integer, Integer> map = game.getSnakesAndLaddersMap();
         assertFalse(map.isEmpty());
         assertTrue(map.keySet().stream().allMatch(tile -> tile >= 0 && tile <= 24));
+
     }
     @Test
     public void testLadder(){
         game.setNextPlayer(new Player("Arnar", 24, true));
-        snakesAndLadders.getSnakesAndLadders().put(2,20);
+        boardBehavior.getSnakesAndLadders().put(2,20);
         Player player = game.getNextPlayer();
         player.move(1);
-        player.setTile(snakesAndLadders.newTile(player));
+        player.setTile(boardBehavior.newTile(player));
         assertEquals(20,player.getTile());
     }
     @Test
     public void testSnake(){
         game.setNextPlayer(new Player("Petur", 24, true));
-        snakesAndLadders.getSnakesAndLadders().put(18,4);
+        boardBehavior.getSnakesAndLadders().put(18,4);
         Player player = game.getNextPlayer();
         player.move(17);
-        player.setTile(snakesAndLadders.newTile(player));
+        player.setTile(boardBehavior.newTile(player));
         assertEquals(4,player.getTile());
     }
     @Test
     public void testEmptyBoard(){
-        SnakesAndLadders snakesAndLadders = new SnakesAndLadders(1.0,0);
-        snakesAndLadders.createMap();
-        assertTrue(snakesAndLadders.getSnakesAndLadders().isEmpty());
+        game = new Game(0, 0, 1.0);
+        HashMap<Integer,Integer> emptyMap = game.getSnakesAndLaddersMap();
+        assertTrue(emptyMap.isEmpty());
     }
 }

@@ -129,6 +129,7 @@ public class SettingsDialogController {
 
     private void createButtons() {
         HBox buttonBox = new HBox();
+        buttonBox.setSpacing(10);
         Button confirmButton = new Button("Halda áfram");
         Button closeButton = new Button("Hætta við");
         confirmButton.setOnAction(event -> {

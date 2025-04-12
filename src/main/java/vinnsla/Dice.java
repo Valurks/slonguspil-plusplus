@@ -23,11 +23,4 @@ public class Dice {
         return number.get();
     }
 
-    public static void main(String[] args) {
-        Dice dice = new Dice();
-        for (int i = 0; i < 12; i++) {
-            dice.throwDice();
-            System.out.print(dice.getNumber() + "\n");
-        }
-    }
 }

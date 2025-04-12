@@ -5,14 +5,12 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.util.Duration;
 
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Game {
 
     private Dice dice;
-    private final SnakesAndLadders snakesAndLadders;
+    private final BoardBehavior boardBehavior;
     private Player nextPlayer;
     private final int max;
     private int numberOfPlayers;
@@ -23,8 +21,9 @@ public class Game {
     private final SimpleBooleanProperty botTurn = new SimpleBooleanProperty(false);
 
     public Game(int height, int width, double difficulty) {
+        BehaviorStrategy strategy = new SnakesAndLaddersStrategy();
         max = height * width;
-        snakesAndLadders = new SnakesAndLadders(difficulty, max);
+        boardBehavior = new BoardBehavior(strategy,difficulty, max);
     }
 
     public Player[] getPlayers() {
@@ -49,7 +48,7 @@ public class Game {
     }
 
     public HashMap<Integer, Integer> getSnakesAndLaddersMap() {
-        return snakesAndLadders.getSnakesAndLadders();
+        return boardBehavior.getSnakesAndLadders();
     }
 
     public void newGame() {
@@ -69,7 +68,7 @@ public class Game {
         dice.throwDice();
         if (nextPlayer.move(dice.getNumber())) return 1;
         else {
-            nextPlayer.setTile(snakesAndLadders.newTile(nextPlayer));
+            nextPlayer.setTile(boardBehavior.newTile(nextPlayer));
         }
 
         int i = (++currentPlayerIndex) % numberOfPlayers;
@@ -102,24 +101,8 @@ public class Game {
         this.onBotTurn = onBotTurn;
     }
 
-    public SnakesAndLadders getSnakesAndLadders() {
-        return snakesAndLadders;
+    public BoardBehavior getSnakesAndLadders() {
+        return boardBehavior;
     }
 
-
-    public static void main(String[] args) {
-        Game game = new Game(4, 6, 1.0);
-        game.newGame();
-        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
-        System.out.print("Á næsti leikmaður að gera? ");
-        String svar = scanner.next();
-        while ("j".equalsIgnoreCase(svar)) {
-            if (game.round() == 1) {
-                System.out.println(game.nextPlayer.getName() + " er kominn í mark");
-                return;
-            }
-            System.out.print("Á næsti leikmaður að gera?");
-        }
-
-    }
 }
