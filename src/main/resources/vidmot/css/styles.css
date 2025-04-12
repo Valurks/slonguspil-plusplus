@@ -24,6 +24,8 @@ HBox {
     -fx-pref-width: 250;
     -fx-min-height: 35;
     -fx-max-height: 35;
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-radius: 5
 }
 
 .labels HBox {
@@ -47,9 +49,13 @@ HBox {
     -fx-alignment: center;
 }
 
+.backgroundPaneDialog {
+    /*-fx-background-color: #f6fff8;*/
+    -fx-background-image: url("../images/backgrounds/dialog.png");
+    -fx-background-size: cover;
+}
 .backgroundPane {
-    -fx-background-color: #f6fff8;
-    /*-fx-background-image: url("../images/upphafsskjar/upphafsmynd.png");*/
+    -fx-background-image: url("../images/backgrounds/board.png");
     -fx-background-size: cover;
 }
 
@@ -59,4 +65,12 @@ ImageView {
 
 .loser {
     -fx-text-fill: #8C8C8C;
+}
+
+.buttonSettings {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-padding: 0;
 }

@@ -1,5 +1,6 @@
 package vidmot;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -36,11 +37,12 @@ public class SettingsDialogController {
         HBox mainViewContainer = new HBox();
         dialog = new Dialog<>();
         DialogPane dialogPane = new DialogPane();
-        dialogPane.setMinHeight(500);
-        dialogPane.setMinWidth(500);
+        dialogPane.setMinHeight(600);
+        dialogPane.setMinWidth(600);
         mainViewContainer.setMaxWidth(350);
         mainViewContainer.setAlignment(Pos.CENTER);
         mainView.setSpacing(20);
+        mainView.setPadding(new Insets(90,0,0,0));
         mainView.getChildren().add(new Region());
 
         createPlayerSlider();
@@ -51,7 +53,7 @@ public class SettingsDialogController {
         mainViewContainer.getChildren().add(mainView);
         dialogPane.setContent(mainViewContainer);
         dialogPane.getStylesheets().add(getClass().getResource("css/styles.css").toExternalForm());
-        dialogPane.getStyleClass().add("backgroundPane");
+        dialogPane.getStyleClass().add("backgroundPaneDialog");
         dialog.setDialogPane(dialogPane);
     }
 

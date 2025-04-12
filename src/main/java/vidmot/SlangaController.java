@@ -55,8 +55,27 @@ public class SlangaController {
         Arrays.fill(bots, false);
         findValidBoardSize((int) settings[1]);
         settingsHandler();
+        setSettingsIcon();
         createGame();
     }
+
+    private void setSettingsIcon() {
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vidmot/images/backgrounds/settings.png")));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(70);
+        imageView.setFitHeight(70);
+        fxButton.setGraphic(imageView);
+        fxButton.setOnMouseEntered(e -> {
+            fxButton.setScaleX(1.1);
+            fxButton.setScaleY(1.1);
+        });
+
+        fxButton.setOnMouseExited(e -> {
+            fxButton.setScaleX(1.0);
+            fxButton.setScaleY(1.0);
+        });
+    }
+
 
     private void createLabels() {
         fxLabels.getChildren().clear();

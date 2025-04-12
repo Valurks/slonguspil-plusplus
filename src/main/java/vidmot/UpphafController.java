@@ -29,7 +29,7 @@ public class UpphafController {
     }
 
     private void setStartButton() {
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vidmot/images/upphafsskjar/StartButton.png")));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vidmot/images/backgrounds/StartButton.png")));
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(150);
         imageView.setFitHeight(150);

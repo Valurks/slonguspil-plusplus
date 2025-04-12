@@ -1,5 +1,5 @@
 .backgroundPane {
-    -fx-background-image: url("../images/upphafsskjar/upphafsmynd.png");
+    -fx-background-image: url("../images/backgrounds/upphafsmynd.png");
     -fx-background-size: cover;
 }
 .button {
