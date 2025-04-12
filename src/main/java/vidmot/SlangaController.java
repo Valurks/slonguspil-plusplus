@@ -225,16 +225,7 @@ public class SlangaController {
             return;
         }
         finished = false;
-        buttonReleased();
         createGame();
-    }
-
-    public void buttonClicked() {
-        fxButton.setStyle("-fx-background-color: grey;");
-    }
-
-    public void buttonReleased() {
-        fxButton.setStyle("-fx-background-color: transparent;");
     }
 
     public void playerDisplayListener(Player player, ImageView icon) {
