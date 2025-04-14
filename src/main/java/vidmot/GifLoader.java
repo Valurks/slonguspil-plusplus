@@ -4,11 +4,17 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
+/**
+ * A class that handles loading and managing the GIF´s
+ */
 public class GifLoader {
 
     private static final Image[] icons = new Image[4];
 
-    public static void init() {
+    /**
+     * Initializes the GIF´s
+     */
+    public static void initialize() {
         for (int i = 0; i < 4; i++) {
             icons[i] = new Image(
                     Objects.requireNonNull(GifLoader.class.getResourceAsStream(
@@ -19,6 +25,10 @@ public class GifLoader {
         System.out.println("Loaded " + icons.length + " gif images");
     }
 
+    /**
+     * Returns the GIF´S
+     * @return icons
+     */
     public static Image[] getIcons() {
         return icons;
     }

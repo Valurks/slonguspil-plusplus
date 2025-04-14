@@ -1,25 +1,29 @@
 package vinnsla;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * A class that test the behavior of the game class.
  */
 public class GameTest {
     private Game game;
 
-    @BeforeEach
+    /**
+     * Creates a new game and adds one player.
+     */
+    @Before
     public void setUp() {
         game = new Game(4,6,1.0);
         game.addPlayer("playerA", false, 0);
         game.newGame();
     }
 
+    /**
+     * Test adding players and checking values.
+     */
     @Test
     public void testAddPlayers() {
         Player[] players = game.getPlayers();
@@ -32,6 +36,9 @@ public class GameTest {
 
     }
 
+    /**
+     * Test round method that updates nextPlayer.
+     */
     @Test
     public void testRound() {
         game.addPlayer("playerB",false,1);
@@ -41,17 +48,26 @@ public class GameTest {
         assertEquals("playerB", game.getNextPlayer().getName());
     }
 
+    /**
+     * Test if round correctly returns -1 when nextPlayer is null.
+     */
     @Test
     public void testRoundWithNoPlayers() {
         game = new Game(4,6,1.0);
         assertEquals(-1, game.round());
     }
 
+    /**
+     * Test if round correctly returns 0 if the game should move on.
+     */
     @Test
     public void testRoundWithOnePlayer() {
         assertEquals(0, game.round());
     }
 
+    /**
+     * Test if round correctly returns 1 if player has reached the end.
+     */
     @Test
     public void testRoundToMax() {
         Player player = game.getNextPlayer();
@@ -60,6 +76,9 @@ public class GameTest {
         assertEquals(1,game.round());
     }
 
+    /**
+     * Test getNextPlayer method.
+     */
     @Test
     public void testGetNextPlayer() {
         Player[] players = game.getPlayers();

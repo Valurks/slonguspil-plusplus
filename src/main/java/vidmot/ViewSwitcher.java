@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Hjörleifur Örn Sveinsson
- * @email hjorleifursveins@gmail.com
- * lýsing: Klasi sem sér um skiptingu á scene
+ * Class that handles the transition between views.
  */
 public class ViewSwitcher {
 
@@ -20,7 +18,7 @@ public class ViewSwitcher {
     private static Scene scene;
 
     /**
-     * Setur núverandi senu í ViewSwitcher sem scene - enginn breyting á glugga
+     * Sets the current scene.
      *
      * @param scene senan
      */
@@ -29,35 +27,25 @@ public class ViewSwitcher {
     }
 
     /**
-     * Skipta yfir í senu sem er lýst í view
+     * Switch to scene that is defined in View.
      *
-     * @param view
+     * @param view The scene being switched to.
      */
     public static void switchTo(View view) {
         if (scene == null) {
             System.out.println("No scene was set");
             return;
         }
-
         try {
             Parent root;
-            // fletta upp í skyndiminni
             if (cache.containsKey(view)) {
                 System.out.println("Loading from cache");
-
                 root = cache.get(view);
-                // annars lesa úr .fxml skrá
             } else {
                 System.out.println("Loading from FXML");
-                // lesa inn .fxml skrána og rótin verður root
-                root = FXMLLoader.load(
-                        ViewSwitcher.class.getResource(view.getFileName())
-                );
-                // geyma í skyndimynni - tengja saman view og root
+                root = FXMLLoader.load(ViewSwitcher.class.getResource(view.getFileName()));
                 cache.put(view, root);
             }
-
-            // setja rótina í núverandi senu
             scene.setRoot(root);
 
         } catch (IOException e) {

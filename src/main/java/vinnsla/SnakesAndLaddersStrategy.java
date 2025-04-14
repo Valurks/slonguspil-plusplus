@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * Strategy class for generating snakes and ladders on a game board.
  */
 public class SnakesAndLaddersStrategy implements BehaviorStrategy{
     private final int MAX_RECURSION = 25;
@@ -16,6 +14,10 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
     private int recursion = 0;
     private ArrayList<Integer> availableTiles;
     private List<BoardConnections> connections;
+
+    /**
+     * Generates a list of board connections.
+     */
     @Override
     public List<BoardConnections> generate(double difficulty, int max){
         this.difficulty = difficulty;
@@ -26,6 +28,9 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
         return connections;
     }
 
+    /**
+     * Initializes the board connections and creates the map.
+     */
     public void createMap() {
         if (max == 0) {
             System.out.println("Board size not set");
@@ -44,6 +49,9 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
         }
     }
 
+    /**
+     * Inserts a single snake or ladder into the map.
+     */
     private void insert() {
         int destination = -1;
         int tile = 0;
@@ -57,6 +65,10 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
         connections.add(new BoardConnections(tile, destination, type));
     }
 
+    /**
+     * Finds a tile that has not been used in a connection yet.
+     * @return A valid tile number.
+     */
     private int findValidTile() {
         int tile = availableTiles.get((int) (Math.random() * availableTiles.size()));
         for (BoardConnections connections : connections){
@@ -66,6 +78,12 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
         return tile;
     }
 
+    /**
+     * Finds a valid destination tile for a current tile.
+     * @param tile The current tile.
+     * @return The valid destination tile.
+     *         -1 if MAX_RECURSION is hit.
+     */
     private int findValidDestinaton(int tile) {
         if (++recursion >= MAX_RECURSION) {
             recursion = 0;

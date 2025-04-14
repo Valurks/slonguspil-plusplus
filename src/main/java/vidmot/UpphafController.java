@@ -14,37 +14,44 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * Controller class of the starting screen.
  */
 public class UpphafController {
     public ImageView fxSnake1;
     public ImageView fxSnake2;
-    public Button fxByrja;
+    public Button fxStart;
 
+    /**
+     * Initalizes the controller class by setting animation and start button.
+     */
     public void initialize() {
         animatesnakes();
         setStartButton();
     }
 
+    /**
+     * Sets the start button.
+     */
     private void setStartButton() {
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vidmot/images/backgrounds/StartButton.png")));
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(150);
         imageView.setFitHeight(150);
-        fxByrja.setGraphic(imageView);
-        fxByrja.setOnMouseEntered(e -> {
-            fxByrja.setScaleX(1.1);
-            fxByrja.setScaleY(1.1);
+        fxStart.setGraphic(imageView);
+        fxStart.setOnMouseEntered(e -> {
+            fxStart.setScaleX(1.1);
+            fxStart.setScaleY(1.1);
         });
 
-        fxByrja.setOnMouseExited(e -> {
-            fxByrja.setScaleX(1.0);
-            fxByrja.setScaleY(1.0);
+        fxStart.setOnMouseExited(e -> {
+            fxStart.setScaleX(1.0);
+            fxStart.setScaleY(1.0);
         });
     }
 
+    /**
+     * Creates 2 animated snakes.
+     */
     private void animatesnakes() {
         Path path = new Path();
         path.getElements().add(new MoveTo(-200, 250));
@@ -59,7 +66,6 @@ public class UpphafController {
         PathTransition pathTransition1 = new PathTransition();
         setPath(fxSnake1,pathTransition1,path);
 
-        //snakur 2
         Path path2 = new Path();
         fxSnake2.setScaleX(-1);
         path2.getElements().add(new MoveTo(800, 600));
@@ -82,6 +88,13 @@ public class UpphafController {
         pathTransition1.play();
         pathTransition2.play();
     }
+
+    /**
+     * Sets the path of the snake.
+     * @param snake Current snake.
+     * @param pathTransition The pathTransition of current snake.
+     * @param path The path of current snake.
+     */
     private void setPath(ImageView snake, PathTransition pathTransition, Path path){
         pathTransition.setNode(snake);
         pathTransition.setDuration(Duration.seconds(11));
@@ -91,8 +104,10 @@ public class UpphafController {
         pathTransition.setInterpolator(Interpolator.LINEAR);
     }
 
-
-    public void onByrja() {
+    /**
+     * Handles when start button is pressed.
+     */
+    public void onStart() {
         ViewSwitcher.switchTo(View.GAME);
     }
 }

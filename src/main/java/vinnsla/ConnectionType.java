@@ -1,9 +1,7 @@
 package vinnsla;
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing: 
+ * Enum class that represents connection types.
  */
 public enum ConnectionType {
      SNAKE,

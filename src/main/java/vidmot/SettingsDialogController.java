@@ -10,6 +10,9 @@ import javafx.scene.layout.VBox;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * A dialog controller that handles and manages the settings of the game.
+ */
 public class SettingsDialogController {
 
     private Dialog<String[][]> dialog;
@@ -21,16 +24,21 @@ public class SettingsDialogController {
     private double[] settings;
     private double[] originalSettings;
 
-
+    /**
+     * Constructs a new isntance of the SettingsDialogController
+     */
     public SettingsDialogController() {
         playerNames = new String[4];
-        Arrays.fill(playerNames, "Ónefndur leikmaður");
+        Arrays.fill(playerNames, "Unnamed player");
         bots = new Boolean[4];
         Arrays.fill(bots, false);
         settings = new double[]{2, 24, 1};
         save();
     }
 
+    /**
+     * Sets the dialog up
+     */
     private void initializeDialog() {
         load();
         mainView = new VBox();
@@ -42,7 +50,7 @@ public class SettingsDialogController {
         mainViewContainer.setMaxWidth(350);
         mainViewContainer.setAlignment(Pos.CENTER);
         mainView.setSpacing(20);
-        mainView.setPadding(new Insets(90,0,0,0));
+        mainView.setPadding(new Insets(90, 0, 0, 0));
         mainView.getChildren().add(new Region());
 
         createPlayerSlider();
@@ -57,7 +65,10 @@ public class SettingsDialogController {
         dialog.setDialogPane(dialogPane);
     }
 
-
+    /**
+     * Creates the slider used in the dialog.
+     * The slider decides how many players are playing.
+     */
     private void createPlayerSlider() {
         VBox playerBox = new VBox();
         Label playersLabel = new Label("Number of players");
@@ -77,7 +88,10 @@ public class SettingsDialogController {
         mainView.getChildren().add(playerBox);
     }
 
-
+    /**
+     * Creates the boardSlider.
+     * The slider decides how big the board is.
+     */
     private void createBoardSizeSelector() {
         VBox boardBox = new VBox();
         Label boardLabel = new Label("Board Size");
@@ -96,6 +110,10 @@ public class SettingsDialogController {
         mainView.getChildren().add(boardBox);
     }
 
+    /**
+     * Creates the difficulty radioboxes.
+     * The radioboxes decide what difficulty the game will be.
+     */
     private void createDifficultySelector() {
         HBox difficultyBox = new HBox();
         HashMap<String, Double> difficultyMap = new HashMap<>();
@@ -120,6 +138,13 @@ public class SettingsDialogController {
         mainView.getChildren().add(difficultyBox);
     }
 
+    /**
+     * Helper method to create the radio boxes.
+     *
+     * @param label Difficulty for the label
+     * @param group Togglegroup
+     * @return A vbox containing the label and radioButton
+     */
     private VBox createRadioButton(String label, ToggleGroup group) {
         VBox radioBox = new VBox();
         RadioButton radio = new RadioButton();
@@ -129,11 +154,14 @@ public class SettingsDialogController {
         return radioBox;
     }
 
+    /**
+     * Creates the buttons in the dialog.
+     */
     private void createButtons() {
         HBox buttonBox = new HBox();
         buttonBox.setSpacing(10);
-        Button confirmButton = new Button("Halda áfram");
-        Button closeButton = new Button("Hætta við");
+        Button confirmButton = new Button("Continue");
+        Button closeButton = new Button("Cancel");
         confirmButton.setOnAction(event -> {
             save();
             createResult();
@@ -145,11 +173,17 @@ public class SettingsDialogController {
         buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
     }
 
+    /**
+     * Creates the HBoxes that contain the players.
+     *
+     * @param id of player.
+     * @return the HBox for the current player.
+     */
     private HBox createPlayerHBox(int id) {
         HBox mainBox = new HBox();
         mainBox.setSpacing(5);
         TextField playerName = new TextField();
-        String defaultName = "Ónefndur leikmaður";
+        String defaultName = "Unnamed player";
         if (playerNames[id].equals(defaultName)) {
             playerName.setPromptText(defaultName);
         } else {
@@ -176,6 +210,10 @@ public class SettingsDialogController {
         return mainBox;
     }
 
+    /**
+     * Creates a VBox for the player input.
+     * @return the VBox.
+     */
     private VBox createPlayersInput() {
         VBox playersBox = new VBox();
         playersBox.setSpacing(5);
@@ -185,7 +223,9 @@ public class SettingsDialogController {
         return playersBox;
     }
 
-
+    /**
+     * Creates the result of the dialog.
+     */
     private void createResult() {
         String[][] result = new String[3][4];
         for (int i = 0; i < 4; i++) {
@@ -197,23 +237,36 @@ public class SettingsDialogController {
         dialog.setResult(result);
     }
 
+    /**
+     * Saves the current changes.
+     */
     private void save() {
         originalSettings = settings.clone();
         originalplayerNames = playerNames.clone();
         originalBots = bots.clone();
     }
 
+    /**
+     * Loads the previous settings.
+     */
     private void load() {
         settings = originalSettings.clone();
         playerNames = originalplayerNames.clone();
         bots = originalBots.clone();
     }
 
+    /**
+     * Opens and shows the dialog.
+     */
     public void open() {
         initializeDialog();
         dialog.showAndWait();
     }
 
+    /**
+     * Returns the result of the dialog.
+     * @return a 2D array of Strings representing the result.
+     */
     public String[][] getResult() {
         return dialog.getResult();
     }

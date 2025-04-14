@@ -1,9 +1,7 @@
 package vidmot;
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * Enum class that represents the current view.
  */
 public enum View {
     GAME("slanga-view.fxml");

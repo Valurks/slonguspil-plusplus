@@ -1,9 +1,7 @@
 package vidmot;
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * A class that launches the starts the SlangaApplication.
  */
 public class Main {
     public static void main(String[] args) {

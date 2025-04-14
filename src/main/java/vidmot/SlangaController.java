@@ -20,6 +20,9 @@ import vinnsla.Dice;
 import vinnsla.Game;
 import vinnsla.Player;
 
+/**
+ * Main controller class for the SlönguSpil++ game.
+ */
 public class SlangaController {
 
     public static final int MAX_PLAYERS = 4;
@@ -50,8 +53,11 @@ public class SlangaController {
 
     ArrayList<Label> labels = new ArrayList<>();
 
+    /**
+     * Initalizes the controller class with default values.
+     */
     public void initialize() {
-        Arrays.fill(playerNames, "Ónefndur leikmaður");
+        Arrays.fill(playerNames, "Unnamed player");
         Arrays.fill(bots, false);
         findValidBoardSize((int) settings[1]);
         settingsHandler();
@@ -59,6 +65,9 @@ public class SlangaController {
         createGame();
     }
 
+    /**
+     * Sets up the settings wheel with hovering affects.
+     */
     private void setSettingsIcon() {
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vidmot/images/backgrounds/settings.png")));
         ImageView imageView = new ImageView(image);
@@ -76,7 +85,9 @@ public class SlangaController {
         });
     }
 
-
+    /**
+     * Creates the labels of the players.
+     */
     private void createLabels() {
         fxLabels.getChildren().clear();
         playerLabels = new Label[(int) settings[0]];
@@ -98,13 +109,16 @@ public class SlangaController {
             }
         }
         for (int i = 0; i < settings[0]; i++) {
-//            players[i].setMessage(playerNames[i]);
             playerLabels[i].textProperty().bind(players[i].getMessage());
             playerLabels[i].setStyle("-fx-border-color: #" + colors[i] + ";");
         }
         fxLabels.getChildren().addAll(upper, lower);
     }
 
+    /**
+     * Handles the settings dialog and updates game settings.
+     * @return 0 if settings were updated, 1 if cancelled
+     */
     private int settingsHandler() {
         settingsDialog.open();
         if (settingsDialog.getResult()[0][0] == null) return 1;
@@ -122,6 +136,9 @@ public class SlangaController {
         return 0;
     }
 
+    /**
+     * Creates a new game with current settings.
+     */
     public void createGame() {
         game = new Game(ROWS, COLS, settings[2]);
         for (int i = 0; i < settings[0]; i++) {
@@ -148,6 +165,9 @@ public class SlangaController {
         fxGrid.getWidth();
     }
 
+    /**
+     * Creates the icons that represent the players.
+     */
     private void createPlayers() {
         for (int i = 0; i < settings[0]; i++) {
             ImageView currentIcon = new ImageView(icons[i]);
@@ -164,6 +184,10 @@ public class SlangaController {
         }
     }
 
+    /**
+     * Finds valid board dimensions.
+     * @param size maximum tiles.
+     */
     private void findValidBoardSize(int size) {
         ROWS = (int) Math.round(Math.sqrt(size) - 0.9);
         COLS = (int) Math.round((float) size / ROWS);
@@ -171,7 +195,7 @@ public class SlangaController {
     }
 
     /**
-     * Núna hægt að breyta gridpane
+     * Sets the starting position of the players.
      */
     private void setPlayersPos() {
         Label label = labels.getFirst();
@@ -183,6 +207,9 @@ public class SlangaController {
         }
     }
 
+    /**
+     * Creates the grid of the board based on the ize of ROWS and COLS.
+     */
     public void createGrid() {
         fxGrid.getChildren().clear();
         labels.clear();
@@ -200,16 +227,22 @@ public class SlangaController {
         }
     }
 
+    /**
+     * Creates a listener to dice so each value is represented with the correct image.
+     */
     public void createListener() {
         dice.getProp().addListener(event -> fxDice.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/dice/" + dice.getNumber() + ".png")))));
     }
 
+    /**
+     * Handles dice rolls and game progression when dice is pressed.
+     */
     public void diceHandler() {
         int utkoma = game.round();
         if (utkoma == -1 || finished) {
             newGameHandler();
         } else if (utkoma == 1) {
-            String winner = game.getNextPlayer().getName() + " er kominn í mark!";
+            String winner = game.getNextPlayer().getName() + " reached the end!!";
             game.getNextPlayer().setMessage(winner);
             for (int i = 0; i < settings[0]; i++) {
                 if (players[i] != game.getNextPlayer()) {
@@ -220,6 +253,10 @@ public class SlangaController {
         }
     }
 
+    /**
+     * Handles starting a new game.
+     * Is only activated when settings are updated.
+     */
     public void newGameHandler() {
         if (settingsHandler() != 0) {
             return;
@@ -228,6 +265,11 @@ public class SlangaController {
         createGame();
     }
 
+    /**
+     * Sets up a listener for player position changes.
+     * @param player The player to track.
+     * @param icon The icon of the player.
+     */
     public void playerDisplayListener(Player player, ImageView icon) {
         player.getTileProp().addListener((observable, oldValue, newValue) -> {
             Label label = labels.get(newValue.intValue() - 1);
@@ -239,6 +281,11 @@ public class SlangaController {
         });
     }
 
+    /**
+     * Updates the position of player icon on the board.
+     * @param player The player to track.
+     * @param icon The icon of the player.
+     */
     public void updatePosition(Player player, ImageView icon) {
         int offset = 0;
         for (int j = 0; j < settings[0]; j++) {
@@ -263,8 +310,11 @@ public class SlangaController {
         }
     }
 
+    /**
+     * Adds the icons and size of snakes and ladders.
+     */
     public void visualSnakesLadders() {
-        HashMap<Integer, Integer> map = game.getSnakesAndLaddersMap();
+        HashMap<Integer, Integer> map = game.getConnectionMap();
         for (int key : map.keySet()) {
             String img;
             int size;

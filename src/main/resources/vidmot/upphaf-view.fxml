@@ -25,7 +25,7 @@
             <Insets />
         </VBox.margin>
     </ImageView>
-        <Button fx:id="fxByrja" mnemonicParsing="false" onAction="#onByrja" stylesheets="@css/upphafsskjar.css">
+        <Button fx:id="fxStart" mnemonicParsing="false" onAction="#onStart" stylesheets="@css/upphafsskjar.css">
          <VBox.margin>
             <Insets bottom="250.0" />
          </VBox.margin></Button>

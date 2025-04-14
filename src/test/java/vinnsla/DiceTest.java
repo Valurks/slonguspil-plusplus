@@ -1,21 +1,28 @@
 package vinnsla;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * Class that tests behavior of a dice.
  */
 public class DiceTest {
     private Dice dice;
-    @BeforeEach
+
+    /**
+     * Creates a dice.
+     */
+    @Before
     public void setUp(){
         dice = new Dice();
     }
+
+    /**
+     * Tests rolling a dice.
+     * Check whether all values are within the right boundaries.
+     */
     @Test
     public void testRoll(){
         for(int i = 0; i < 100; i++){
@@ -25,6 +32,11 @@ public class DiceTest {
         }
 
     }
+
+    /**
+     * Test the correct value before rolling.
+     * The initial value of the dice is 6.
+     */
     @Test
     public void testBeforeRolling(){
         int result = dice.getNumber();
