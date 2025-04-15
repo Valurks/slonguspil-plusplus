@@ -213,7 +213,6 @@ public class SlangaController {
     public void createGrid() {
         fxGrid.getChildren().clear();
         labels.clear();
-//        String[] colors = new String[]{"be986d", "e8c9ab"};
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 int col = (i % 2 == 0) ? j : COLS - j - 1;
@@ -221,7 +220,6 @@ public class SlangaController {
                 int index = i * COLS + j + 1;
                 labels.add(new Label(index + ""));
                 Label label = labels.get(index - 1);
-//                label.setStyle("-fx-background-color: #" + colors[(int) (Math.random() * colors.length)] + ";");
                 label.getStyleClass().add("tile"+index%2);
                 fxGrid.add(label, col, row);
             }
