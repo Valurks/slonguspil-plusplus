@@ -3,9 +3,9 @@
 Ladders** board game, supporting **2 - 4** players.
 
 ### Features
-- **Randomized boards** - Each game generates a board based on difficulty.
-- **Bots** - Challange up to 3 computer-controlled players.
-- **Board size** - Choose the board size to your liking.
+- 🎲 **Randomized boards** - Each game generates a board based on difficulty.
+- 🤖 **Bots** - Challenge up to 3 computer-controlled players.
+- ♟️ **Board size** - Choose the board size to your liking.
 
 ### Project structure
 This is a standard Maven project, so your IDE should be able to automatically 
