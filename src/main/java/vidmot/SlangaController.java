@@ -242,7 +242,7 @@ public class SlangaController {
         if (utkoma == -1 || finished) {
             newGameHandler();
         } else if (utkoma == 1) {
-            String winner = game.getNextPlayer().getName() + " reached the end!!";
+            String winner = game.getNextPlayer().getName() + " reached the end! \uD83C\uDFC1";
             game.getNextPlayer().setMessage(winner);
             for (int i = 0; i < settings[0]; i++) {
                 if (players[i] != game.getNextPlayer()) {

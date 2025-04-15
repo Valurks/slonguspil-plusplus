@@ -112,7 +112,11 @@ public class Game {
         dice.throwDice();
         if (nextPlayer.move(dice.getNumber())) return 1;
         else {
-            nextPlayer.setTile(boardBehavior.newTile(nextPlayer));
+            int newTile = boardBehavior.newTile(nextPlayer);
+            nextPlayer.setTile(newTile);
+            if (newTile >= max) {
+                return 1;
+            }
         }
 
         int i = (++currentPlayerIndex) % numberOfPlayers;

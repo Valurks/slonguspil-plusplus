@@ -37,9 +37,9 @@ public class BoardBehavior {
 
         if (connectionMap.containsKey(currentTile)) {
             if (newTile > currentTile) {
-                player.setMessage(player.getName() + " climbed the ladder!");
+                player.setMessage(player.getName() + " climbed the ladder! \uD83E\uDE9C");
             } else {
-                player.setMessage(player.getName() + " slid down the snake :(");
+                player.setMessage(player.getName() + " slid down the snake \uD83D\uDC0D");
             }
         }
         return newTile;
