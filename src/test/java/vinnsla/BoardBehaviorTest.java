@@ -8,7 +8,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 /**
- * A test class for the BoardBehavior class.
+ * Test class for the BoardBehavior class.
  * Tests basic functionality of snakes and ladder behavior.
  */
 public class BoardBehaviorTest {
@@ -36,7 +36,7 @@ public class BoardBehaviorTest {
     }
 
     /**
-     * Test that players correctly climb ladders.
+     * Tests that players correctly climb ladders.
      */
     @Test
     public void testLadder(){
@@ -49,7 +49,7 @@ public class BoardBehaviorTest {
     }
 
     /**
-     * Test that players correctly slide down snakes.
+     * Tests that players correctly slide down snakes.
      */
     @Test
     public void testSnake(){
@@ -62,7 +62,7 @@ public class BoardBehaviorTest {
     }
 
     /**
-     * Test behavior of an empty board.
+     * Tests behavior of an empty board.
      */
     @Test
     public void testEmptyBoard(){
