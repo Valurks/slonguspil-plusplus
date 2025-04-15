@@ -30,7 +30,7 @@ public class PlayerTest {
     }
 
     /**
-     * Test moving the player beyond max.
+     * Tests moving the player beyond max.
      */
     @Test
     public void testMaxMove(){
@@ -40,7 +40,7 @@ public class PlayerTest {
     }
 
     /**
-     * Test getPlayer method.
+     * Tests getPlayer method.
      */
     @Test
     public void testGetPlayer(){
