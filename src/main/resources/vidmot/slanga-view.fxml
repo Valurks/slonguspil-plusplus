@@ -8,17 +8,18 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.StackPane?>
 <VBox alignment="CENTER" spacing="20.0" styleClass="backgroundPane" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.SlangaController">
         <GridPane fx:id="fxGrid" styleClass="grid"/>
-    <HBox alignment="CENTER" prefWidth="Infinity">
+    <HBox alignment="CENTER" prefWidth="Infinity" spacing="10">
         <Region HBox.hgrow="ALWAYS" />
         <VBox fx:id="fxLabels" styleClass="labels" spacing="5"/>
-        <Region minWidth="10" />
         <Button fx:id="fxButton" onAction="#newGameHandler" prefHeight="75" prefWidth="75" styleClass="buttonSettings"/>
-        <Region minWidth="10" />
-        <ImageView fx:id="fxDice" fitHeight="75" fitWidth="75" onMousePressed="#diceHandler" pickOnBounds="true" preserveRatio="true">
-            <Image url="@images/dice/0.png" />
-        </ImageView>
-        <Region HBox.hgrow="ALWAYS" />
+        <HBox styleClass="diceContainer" maxWidth="75">
+            <ImageView fx:id="fxDice" fitHeight="75" fitWidth="75" onMousePressed="#diceHandler" pickOnBounds="true" preserveRatio="true">
+                <Image url="@images/dice/0.png"/>
+            </ImageView>
+        </HBox>
+        <Region HBox.hgrow="ALWAYS"/>
     </HBox>
 </VBox>

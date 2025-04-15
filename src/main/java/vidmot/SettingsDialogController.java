@@ -203,7 +203,7 @@ public class SettingsDialogController {
         bot.setSelected(bots[id]);
         bot.selectedProperty().addListener((obs, oldval, newval) -> bots[id] = newval);
         if (id == 0) {
-            bot.setDisable(true);
+            bot.setVisible(false);
         }
 
         mainBox.getChildren().addAll(playerName, bot);

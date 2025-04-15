@@ -36,11 +36,9 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
             System.out.println("Board size not set");
             return;
         }
-        for (int i = 1; i <= max; i++) {
+        for (int i = 2; i < max; i++) {
             availableTiles.add(i);
         }
-        availableTiles.removeFirst();
-        availableTiles.removeLast();
         double randomPosNeg = Math.random() * difficulty * 2 - 1;
         int numberOfConnections = (int) (difficulty * max / 5.0 + randomPosNeg * Math.sqrt((double) max / 2));
         numberOfConnections = Math.min(numberOfConnections, (int) (max / MAX_CONNECTION_RATIO));
@@ -92,7 +90,7 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
         boolean direction = Math.random() > Math.pow(difficulty, 1.4) * 0.4; //true upp, false niður
         int length = (int) (Math.random() * difficulty * 5 + 2); //lengd stiga/snáks
         length = direction ? length : -length;
-        int destination = Math.min(Math.max(tile + length, 1), max);
+        int destination = Math.min(Math.max(tile + length, 1), max-1);
 
         for (BoardConnections connections : connections){
             if (connections.to() == destination || connections.from() == destination)

@@ -24,7 +24,7 @@ HBox {
     -fx-pref-width: 250;
     -fx-min-height: 35;
     -fx-max-height: 35;
-    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-color: #ffffff;
     -fx-background-radius: 5
 }
 
@@ -50,7 +50,6 @@ HBox {
 }
 
 .backgroundPaneDialog {
-    /*-fx-background-color: #f6fff8;*/
     -fx-background-image: url("../images/backgrounds/dialog.png");
     -fx-background-size: cover;
 }
@@ -73,4 +72,18 @@ ImageView {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
     -fx-padding: 0;
+}
+
+.diceContainer {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 3;
+    -fx-background-radius: 5;
+}
+
+.tile0 {
+    -fx-background-image: url("../images/tiles/0.png");
+}
+
+.tile1 {
+    -fx-background-image: url("../images/tiles/1.png");
 }
