@@ -9,9 +9,7 @@ import static org.junit.Assert.*;
 
 
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * Class that tests the behvior of SnakesAndLaddersStrategy class.
  */
 public class SnakesAndLaddersStrategyTest {
     private SnakesAndLaddersStrategy strategy;
@@ -52,7 +50,7 @@ public class SnakesAndLaddersStrategyTest {
     }
 
     /**
-     * Test generating an list of no connections.
+     * Tests generating an list of no connections.
      */
     @Test
     public void testGeneratingNoConnections(){

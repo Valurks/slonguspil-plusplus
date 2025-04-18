@@ -1,7 +1,7 @@
 package vidmot;
 
 /**
- * A class that launches the starts the SlangaApplication.
+ * Launches the SlangaApplication.
  */
 public class Main {
     public static void main(String[] args) {

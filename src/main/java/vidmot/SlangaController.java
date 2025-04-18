@@ -27,8 +27,23 @@ public class SlangaController {
 
     public static final int MAX_PLAYERS = 4;
     public static final int SIZE_OF_ICONS = 50;
+
     private int ROWS;
     private int COLS;
+    private Game game = new Game(ROWS, COLS, 1.0);
+    private Dice dice;
+    private final SettingsDialogController settingsDialog = new SettingsDialogController();
+    private boolean finished = false;
+
+    private double[] settings = new double[]{2.0, 24.0, 1.0};
+    private String[] playerNames = new String[MAX_PLAYERS];
+    private boolean[] bots = new boolean[MAX_PLAYERS];
+    private Player[] players;
+    private final Image[] icons = GifLoader.getIcons();
+    private ImageView[] playerIcons;
+    private Label[] playerLabels;
+    ArrayList<Label> labels = new ArrayList<>();
+
     @FXML
     private ImageView fxDice;
     @FXML
@@ -37,21 +52,6 @@ public class SlangaController {
     private VBox fxLabels;
     @FXML
     private GridPane fxGrid;
-
-    private Game game = new Game(ROWS, COLS, 1.0);
-    private Dice dice;
-    private final SettingsDialogController settingsDialog = new SettingsDialogController();
-    private double[] settings = new double[]{2.0, 24.0, 1.0};
-    private String[] playerNames = new String[MAX_PLAYERS];
-    private boolean[] bots = new boolean[MAX_PLAYERS];
-    private Player[] players;
-    private final Image[] icons = GifLoader.getIcons();
-    private ImageView[] playerIcons;
-    private Label[] playerLabels;
-
-    private boolean finished = false;
-
-    ArrayList<Label> labels = new ArrayList<>();
 
     /**
      * Initalizes the controller class with default values.
@@ -117,7 +117,7 @@ public class SlangaController {
 
     /**
      * Handles the settings dialog and updates game settings.
-     * @return 0 if settings were updated, 1 if cancelled
+     * @return 0 if settings were updated, 1 if cancelled.
      */
     private int settingsHandler() {
         settingsDialog.open();
@@ -166,7 +166,7 @@ public class SlangaController {
     }
 
     /**
-     * Creates the icons that represent the players.
+     * Creates icons that represent the players.
      */
     private void createPlayers() {
         for (int i = 0; i < settings[0]; i++) {
@@ -208,7 +208,7 @@ public class SlangaController {
     }
 
     /**
-     * Creates the grid of the board based on the ize of ROWS and COLS.
+     * Creates the grid for the board based on total rows and columns.
      */
     public void createGrid() {
         fxGrid.getChildren().clear();

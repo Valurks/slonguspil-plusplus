@@ -22,7 +22,7 @@ public class GameTest {
     }
 
     /**
-     * Test adding players and checking values.
+     * Tests adding players and checking values.
      */
     @Test
     public void testAddPlayers() {
@@ -37,7 +37,7 @@ public class GameTest {
     }
 
     /**
-     * Test round method that updates nextPlayer.
+     * Tests round method that updates nextPlayer.
      */
     @Test
     public void testRound() {
@@ -49,7 +49,7 @@ public class GameTest {
     }
 
     /**
-     * Test if round correctly returns -1 when nextPlayer is null.
+     * Tests if round correctly returns -1 when nextPlayer is null.
      */
     @Test
     public void testRoundWithNoPlayers() {
@@ -58,7 +58,7 @@ public class GameTest {
     }
 
     /**
-     * Test if round correctly returns 0 if the game should move on.
+     * Tests if round correctly returns 0 if the game should move on.
      */
     @Test
     public void testRoundWithOnePlayer() {
@@ -66,7 +66,7 @@ public class GameTest {
     }
 
     /**
-     * Test if round correctly returns 1 if player has reached the end.
+     * Tests if round correctly returns 1 if player has reached the end.
      */
     @Test
     public void testRoundToMax() {
@@ -77,7 +77,7 @@ public class GameTest {
     }
 
     /**
-     * Test getNextPlayer method.
+     * Tests getNextPlayer method.
      */
     @Test
     public void testGetNextPlayer() {

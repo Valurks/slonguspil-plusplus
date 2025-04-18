@@ -8,15 +8,15 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 /**
- * Test class for the BoardBehavior class.
- * Tests basic functionality of snakes and ladder behavior.
+ * Class that tests the behavior of BoardBehavior class.
+ *
  */
 public class BoardBehaviorTest {
     private Game game;
     private BoardBehavior boardBehavior;
 
     /**
-     * Sets a standard game before each tets.
+     * Sets a standard game before each test.
      */
     @Before
     public void setUp() {

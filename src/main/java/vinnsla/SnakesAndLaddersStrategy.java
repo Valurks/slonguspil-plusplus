@@ -7,8 +7,14 @@ import java.util.List;
  * Strategy class for generating snakes and ladders on a game board.
  */
 public class SnakesAndLaddersStrategy implements BehaviorStrategy{
-    private final int MAX_RECURSION = 25;
-    private final double MAX_CONNECTION_RATIO = 2.5;
+
+    private static final int MAX_RECURSION = 25;
+    private static final double MAX_CONNECTION_RATIO = 2.5;
+    private static final double DIFFICULTY_EXPONENT = 1.4;
+    private static final double DIRECTION_THRESHOLD = 0.4;
+    private static final int DIFFICULTY_FACTOR = 5;
+    private static final double CONNECTION_FACTOR = 5.0;
+
     private double difficulty;
     private int max;
     private int recursion = 0;
@@ -40,7 +46,7 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
             availableTiles.add(i);
         }
         double randomPosNeg = Math.random() * difficulty * 2 - 1;
-        int numberOfConnections = (int) (difficulty * max / 5.0 + randomPosNeg * Math.sqrt((double) max / 2));
+        int numberOfConnections = (int) (difficulty * max / CONNECTION_FACTOR + randomPosNeg * Math.sqrt((double) max / 2));
         numberOfConnections = Math.min(numberOfConnections, (int) (max / MAX_CONNECTION_RATIO));
         for (int i = 0; i < numberOfConnections; i++) {
             insert();
@@ -65,7 +71,7 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
 
     /**
      * Finds a tile that has not been used in a connection yet.
-     * @return A valid tile number.
+     * @return A valid tile number
      */
     private int findValidTile() {
         int tile = availableTiles.get((int) (Math.random() * availableTiles.size()));
@@ -78,17 +84,17 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
 
     /**
      * Finds a valid destination tile for a current tile.
-     * @param tile The current tile.
-     * @return The valid destination tile.
-     *         -1 if MAX_RECURSION is hit.
+     * @param tile The current tile
+     * @return The valid destination tile
+     *         -1 if MAX_RECURSION is hit
      */
     private int findValidDestinaton(int tile) {
         if (++recursion >= MAX_RECURSION) {
             recursion = 0;
             return -1;
         }
-        boolean direction = Math.random() > Math.pow(difficulty, 1.4) * 0.4; //true upp, false niður
-        int length = (int) (Math.random() * difficulty * 5 + 2); //lengd stiga/snáks
+        boolean direction = Math.random() > Math.pow(difficulty, DIFFICULTY_EXPONENT) * DIRECTION_THRESHOLD;
+        int length = (int) (Math.random() * difficulty * DIFFICULTY_FACTOR + 2);
         length = direction ? length : -length;
         int destination = Math.min(Math.max(tile + length, 1), max-1);
 

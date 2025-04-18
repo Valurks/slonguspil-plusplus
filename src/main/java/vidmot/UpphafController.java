@@ -17,6 +17,7 @@ import java.util.Objects;
  * Controller class of the starting screen.
  */
 public class UpphafController {
+
     public ImageView fxSnake1;
     public ImageView fxSnake2;
     public Button fxStart;
