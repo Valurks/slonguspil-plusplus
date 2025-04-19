@@ -24,6 +24,10 @@ public class SettingsDialogController {
     private double[] settings;
     private double[] originalSettings;
 
+    // settings[0]: number of players
+    // settings[1]: board size
+    // settings[2]: difficulty
+
     /**
      * Constructs a new isntance of the SettingsDialogController
      */
@@ -73,10 +77,12 @@ public class SettingsDialogController {
         VBox playerBox = new VBox();
         Label playersLabel = new Label("Number of players");
         Slider playerSlider = new Slider(2, 4, settings[0]);
+
         playerSlider.setShowTickMarks(true);
         playerSlider.setMajorTickUnit(1f);
         playerSlider.setShowTickLabels(true);
         playerSlider.setMinorTickCount(0);
+
         playerSlider.valueProperty().addListener((obs, oldval, newVal) -> {
             int value = (int) Math.round(newVal.doubleValue());
             playerSlider.setValue(value);
@@ -84,6 +90,7 @@ public class SettingsDialogController {
             playerBox.getChildren().remove(2);
             playerBox.getChildren().add(createPlayersInput());
         });
+
         playerBox.getChildren().addAll(playersLabel, playerSlider, createPlayersInput());
         mainView.getChildren().add(playerBox);
     }
@@ -95,13 +102,13 @@ public class SettingsDialogController {
     private void createBoardSizeSelector() {
         VBox boardBox = new VBox();
         Label boardLabel = new Label("Board Size");
-        Slider boardSlider = new Slider(15, 100, settings[1]);
+        Slider boardSlider = new Slider(0, 100, settings[1]);
         boardSlider.setShowTickMarks(true);
         boardSlider.setMajorTickUnit(25f);
         boardSlider.setShowTickLabels(true);
         boardSlider.setMinorTickCount(0);
         boardSlider.valueProperty().addListener((obs, oldval, newVal) -> {
-            int value = (int) Math.round(newVal.doubleValue());
+            int value = (int) Math.max(Math.round(newVal.doubleValue()),15);
             boardSlider.setValue(value);
             settings[1] = value;
         });
@@ -121,13 +128,20 @@ public class SettingsDialogController {
         difficultyMap.put("Easy", 0.75);
         difficultyMap.put("Normal", 1.0);
         difficultyMap.put("Hard", 1.5);
-        VBox[] radioBoxes = new VBox[]{createRadioButton("Easy", group), createRadioButton("Normal", group), createRadioButton("Hard", group)};
-        HashMap<Double, Integer> translator = new HashMap<>();
-        translator.put(0.75, 0);
-        translator.put(1.0, 1);
-        translator.put(1.5, 2);
+        VBox[] radioBoxes = new VBox[3];
+        int i = 0;
+        for (String key : difficultyMap.keySet()) {
+            radioBoxes[i] = createRadioButton(key, group);
+            i++;
+        }
+        HashMap<Double, Integer> difficultyToIndexTranslator = new HashMap<>();
+        difficultyToIndexTranslator.put(0.75, 0);
+        difficultyToIndexTranslator.put(1.0, 1);
+        difficultyToIndexTranslator.put(1.5, 2);
 
-        group.selectToggle((RadioButton) radioBoxes[translator.get(originalSettings[2])].getChildren().get(1));
+        int currentDifficultyIndex = difficultyToIndexTranslator.get(originalSettings[2]);
+        RadioButton currentRadio = (RadioButton) radioBoxes[currentDifficultyIndex].getChildren().get(1);
+        group.selectToggle(currentRadio);
 
         difficultyBox.getChildren().addAll(radioBoxes[0], radioBoxes[1], radioBoxes[2]);
         group.selectedToggleProperty().addListener((obs, oldval, newval) -> {
@@ -174,44 +188,68 @@ public class SettingsDialogController {
     }
 
     /**
-     * Creates the HBoxes that contain the players.
+     * Creates the HBoxes that contain the player name textboxes.
      *
-     * @param id of player.
+     * @param index of player.
      * @return the HBox for the current player.
      */
-    private HBox createPlayerHBox(int id) {
+    private HBox createPlayerHBox(int index) {
         HBox mainBox = new HBox();
         mainBox.setSpacing(5);
-        TextField playerName = new TextField();
-        String defaultName = "Unnamed player";
-        if (playerNames[id].equals(defaultName)) {
-            playerName.setPromptText(defaultName);
-        } else {
-            playerName.setText(playerNames[id]);
-        }
-        playerName.setOnKeyTyped(event -> {
-            if (playerName.getText().trim().isBlank()) {
-                playerName.setPromptText(defaultName);
-            } else {
-                playerNames[id] = playerName.getText().trim();
-            }
-        });
 
-
-        CheckBox bot = new CheckBox("bot");
-        bot.setId(id + "");
-        bot.setSelected(bots[id]);
-        bot.selectedProperty().addListener((obs, oldval, newval) -> bots[id] = newval);
-        if (id == 0) {
-            bot.setVisible(false);
-        }
+        TextField playerName = createPlayerTextField(index);
+        CheckBox bot = createPlayerCheckBox(index);
 
         mainBox.getChildren().addAll(playerName, bot);
         return mainBox;
     }
 
     /**
+     * Creates a checkbox to control whether a specific player is a bot or not,
+     * player is based on the player index
+     *
+     * @param index of the player
+     * @return CheckBox to control a player's bot attribute
+     */
+    private CheckBox createPlayerCheckBox(int index) {
+        CheckBox bot = new CheckBox("bot");
+        bot.setId(index + "");
+        bot.setSelected(bots[index]);
+        bot.selectedProperty().addListener((obs, oldval, newval) -> bots[index] = newval);
+        if (index == 0) {
+            bot.setVisible(false);
+        }
+        return bot;
+    }
+
+    /**
+     * Creates a textfield to edit a specific player's name,
+     * player is based on the player index
+     *
+     * @param index of player.
+     * @return TextField to edit player's name
+     */
+    private TextField createPlayerTextField(int index) {
+        TextField playerName = new TextField();
+        String defaultName = "Unnamed player";
+        if (playerNames[index].equals(defaultName)) {
+            playerName.setPromptText(defaultName);
+        } else {
+            playerName.setText(playerNames[index]);
+        }
+        playerName.setOnKeyTyped(event -> {
+            if (playerName.getText().trim().isBlank()) {
+                playerName.setPromptText(defaultName);
+            } else {
+                playerNames[index] = playerName.getText().trim();
+            }
+        });
+        return playerName;
+    }
+
+    /**
      * Creates a VBox for the player input.
+     *
      * @return the VBox.
      */
     private VBox createPlayersInput() {
@@ -231,7 +269,6 @@ public class SettingsDialogController {
         for (int i = 0; i < 4; i++) {
             if (i < 3) result[0][i] = originalSettings[i] + "";
             result[2][i] = bots[i] + "";
-
         }
         result[1] = playerNames.clone();
         dialog.setResult(result);

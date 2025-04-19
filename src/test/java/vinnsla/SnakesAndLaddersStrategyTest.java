@@ -7,11 +7,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-
 /**
- * Nafn: Hjörleifur Örn Sveinsson
- * Gmail: hjorleifursveins@gmail.com
- * Lýsing:
+ * A class that tests the SnakesAndLaddersStrategy class
+ * Verifies the behavior of the strategy for generating snakes and ladders
+ * connections on the game board.
  */
 public class SnakesAndLaddersStrategyTest {
     private SnakesAndLaddersStrategy strategy;
@@ -52,7 +51,7 @@ public class SnakesAndLaddersStrategyTest {
     }
 
     /**
-     * Test generating an list of no connections.
+     * Test generating a list of no connections.
      */
     @Test
     public void testGeneratingNoConnections(){

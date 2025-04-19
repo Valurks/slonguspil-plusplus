@@ -1,2 +1,2 @@
 echo Running game...
-java -jar target/slanga-1.0-SNAPSHOT-jar-with-dependencies.jar
+java -jar target/slanga-1.1-jar-with-dependencies.jar

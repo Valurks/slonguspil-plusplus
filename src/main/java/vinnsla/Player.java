@@ -34,12 +34,12 @@ public class Player {
      * @return True if player has finished the game. False if not.
      */
     public boolean move(int diceThrow) {
-        int reitur = this.tile.get() + diceThrow;
-        if (reitur >= max) {
+        int tile = this.tile.get() + diceThrow;
+        if (tile >= max) {
             this.tile.set(max);
             return true;
         } else {
-            this.tile.set(reitur);
+            this.tile.set(tile);
             return false;
         }
     }

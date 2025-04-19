@@ -27,8 +27,8 @@ public class SlangaController {
 
     public static final int MAX_PLAYERS = 4;
     public static final int SIZE_OF_ICONS = 50;
-    private int ROWS;
-    private int COLS;
+    private int rows = 6;
+    private int cols = 4;
     @FXML
     private ImageView fxDice;
     @FXML
@@ -38,20 +38,20 @@ public class SlangaController {
     @FXML
     private GridPane fxGrid;
 
-    private Game game = new Game(ROWS, COLS, 1.0);
+    private Game game = new Game(rows, cols, 1.0);
     private Dice dice;
     private final SettingsDialogController settingsDialog = new SettingsDialogController();
     private double[] settings = new double[]{2.0, 24.0, 1.0};
     private String[] playerNames = new String[MAX_PLAYERS];
     private boolean[] bots = new boolean[MAX_PLAYERS];
     private Player[] players;
-    private final Image[] icons = GifLoader.getIcons();
+    private final Image[] icons = GifCache.getIcons();
     private ImageView[] playerIcons;
     private Label[] playerLabels;
 
     private boolean finished = false;
 
-    ArrayList<Label> labels = new ArrayList<>();
+    ArrayList<Label> gridLabels = new ArrayList<>();
 
     /**
      * Initalizes the controller class with default values.
@@ -86,7 +86,7 @@ public class SlangaController {
     }
 
     /**
-     * Creates the labels of the players.
+     * Creates the gridLabels of the players.
      */
     private void createLabels() {
         fxLabels.getChildren().clear();
@@ -96,23 +96,23 @@ public class SlangaController {
         }
         String[] colors = new String[]{"2994EF", "EA1D36", "f8ba00", "00d900"};
 
-        HBox upper = new HBox();
-        HBox lower = new HBox();
+        HBox upperBox = new HBox();
+        HBox lowerBox = new HBox();
 
         if (settings[0] == 2) {
-            upper.getChildren().add(playerLabels[0]);
-            lower.getChildren().add(playerLabels[1]);
+            upperBox.getChildren().add(playerLabels[0]);
+            lowerBox.getChildren().add(playerLabels[1]);
         } else {
-            upper.getChildren().addAll(playerLabels[0], playerLabels[1]);
+            upperBox.getChildren().addAll(playerLabels[0], playerLabels[1]);
             for (int i = 2; i < playerLabels.length; i++) {
-                lower.getChildren().add(playerLabels[i]);
+                lowerBox.getChildren().add(playerLabels[i]);
             }
         }
         for (int i = 0; i < settings[0]; i++) {
             playerLabels[i].textProperty().bind(players[i].getMessage());
             playerLabels[i].setStyle("-fx-border-color: #" + colors[i] + ";");
         }
-        fxLabels.getChildren().addAll(upper, lower);
+        fxLabels.getChildren().addAll(upperBox, lowerBox);
     }
 
     /**
@@ -140,29 +140,42 @@ public class SlangaController {
      * Creates a new game with current settings.
      */
     public void createGame() {
-        game = new Game(ROWS, COLS, settings[2]);
+        game = new Game(rows, cols, settings[2]);
         for (int i = 0; i < settings[0]; i++) {
             game.addPlayer(playerNames[i], bots[i], i);
-
         }
         players = game.getPlayers();
         game.newGame();
         dice = game.getDice();
         playerIcons = new ImageView[MAX_PLAYERS];
         createGrid();
-        createListener();
+        createDiceListener();
         createPlayers();
-        setPlayersPos();
+        setPlayersStartingPos();
 
-        game.botTurnProperty().addListener((obs, oldVal, newVal) -> {
-            fxDice.setMouseTransparent(newVal);
-        });
+        game.botTurnProperty().addListener((obs, oldVal, newVal) ->
+            fxDice.setMouseTransparent(newVal)
+        );
         game.setOnBotTurn(() -> Platform.runLater(this::diceHandler));
 
         visualSnakesLadders();
         createLabels();
-        updatePosition(players[0], playerIcons[0]);
+        updatePlayerPosition(players[0], playerIcons[0]);
+        updateLabels();
         fxGrid.getWidth();
+    }
+
+    private void updateLabels() {
+        for (int i = 0; i < settings[0]; i++) {
+            if (game.getNextPlayer() == players[i]) {
+                playerLabels[i].setScaleX(1);
+                playerLabels[i].setScaleY(1);
+            } else {
+                playerLabels[i].setScaleX(0.9);
+                playerLabels[i].setScaleY(0.9);
+            }
+        }
+
     }
 
     /**
@@ -189,16 +202,16 @@ public class SlangaController {
      * @param size maximum tiles.
      */
     private void findValidBoardSize(int size) {
-        ROWS = (int) Math.round(Math.sqrt(size) - 0.9);
-        COLS = (int) Math.round((float) size / ROWS);
-        settings[1] = ROWS * COLS;
+        rows = (int) Math.round(Math.sqrt(size) - 0.9);
+        cols = Math.round((float) size / rows);
+        settings[1] = rows * cols;
     }
 
     /**
      * Sets the starting position of the players.
      */
-    private void setPlayersPos() {
-        Label label = labels.getFirst();
+    private void setPlayersStartingPos() {
+        Label label = gridLabels.getFirst();
         int startCol = GridPane.getColumnIndex(label);
         int startRow = GridPane.getRowIndex(label);
         for (int i = 0; i < settings[0]; i++) {
@@ -208,18 +221,18 @@ public class SlangaController {
     }
 
     /**
-     * Creates the grid of the board based on the ize of ROWS and COLS.
+     * Creates the grid of the board based on the ize of rows and cols.
      */
     public void createGrid() {
         fxGrid.getChildren().clear();
-        labels.clear();
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                int col = (i % 2 == 0) ? j : COLS - j - 1;
-                int row = ROWS - i - 1;
-                int index = i * COLS + j + 1;
-                labels.add(new Label(index + ""));
-                Label label = labels.get(index - 1);
+        gridLabels.clear();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                int col = (i % 2 == 0) ? j : cols - j - 1;
+                int row = rows - i - 1;
+                int index = i * cols + j + 1;
+                gridLabels.add(new Label(index + ""));
+                Label label = gridLabels.get(index - 1);
                 label.getStyleClass().add("tile"+index%2);
                 fxGrid.add(label, col, row);
             }
@@ -229,7 +242,7 @@ public class SlangaController {
     /**
      * Creates a listener to dice so each value is represented with the correct image.
      */
-    public void createListener() {
+    public void createDiceListener() {
         dice.getProp().addListener(event -> fxDice.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/dice/" + dice.getNumber() + ".png")))));
     }
 
@@ -237,10 +250,10 @@ public class SlangaController {
      * Handles dice rolls and game progression when dice is pressed.
      */
     public void diceHandler() {
-        int utkoma = game.round();
-        if (utkoma == -1 || finished) {
+        int result = game.round();
+        if (result == -1 || finished) {
             newGameHandler();
-        } else if (utkoma == 1) {
+        } else if (result == 1) {
             String winner = game.getNextPlayer().getName() + " reached the end! \uD83C\uDFC1";
             game.getNextPlayer().setMessage(winner);
             for (int i = 0; i < settings[0]; i++) {
@@ -249,7 +262,9 @@ public class SlangaController {
                 }
             }
             finished = true;
+            return;
         }
+        updateLabels();
     }
 
     /**
@@ -271,12 +286,12 @@ public class SlangaController {
      */
     public void playerDisplayListener(Player player, ImageView icon) {
         player.getTileProp().addListener((observable, oldValue, newValue) -> {
-            Label label = labels.get(newValue.intValue() - 1);
+            Label label = gridLabels.get(newValue.intValue() - 1);
             int col = GridPane.getColumnIndex(label);
             int row = GridPane.getRowIndex(label);
             GridPane.setColumnIndex(icon, col);
             GridPane.setRowIndex(icon, row);
-            updatePosition(player, icon);
+            updatePlayerPosition(player, icon);
         });
     }
 
@@ -285,7 +300,7 @@ public class SlangaController {
      * @param player The player to track.
      * @param icon The icon of the player.
      */
-    public void updatePosition(Player player, ImageView icon) {
+    public void updatePlayerPosition(Player player, ImageView icon) {
         int offset = 0;
         for (int j = 0; j < settings[0]; j++) {
             if (player.getTile() == players[j].getTile() && icon != playerIcons[j]) {
@@ -325,7 +340,7 @@ public class SlangaController {
                 size = 20;
             }
 
-            Label label = labels.get(key - 1);
+            Label label = gridLabels.get(key - 1);
             int col = GridPane.getColumnIndex(label);
             int row = GridPane.getRowIndex(label);
 

@@ -33,6 +33,7 @@ public class Game {
         BehaviorStrategy strategy = new SnakesAndLaddersStrategy();
         max = rows * cols;
         boardBehavior = new BoardBehavior(strategy,difficulty, max);
+
     }
 
     /**
@@ -58,8 +59,9 @@ public class Game {
      * @param index current index of player, from 0 to 3.
      */
     public void addPlayer(String name, boolean isBot, int index) {
+        int validIndex = index < 0 || index > 3 ? 0 : index;
         Player player = new Player(name, max, isBot);
-        players[index] = player;
+        players[validIndex] = player;
     }
 
     /**
@@ -119,11 +121,11 @@ public class Game {
             }
         }
 
-        int i = (++currentPlayerIndex) % numberOfPlayers;
-        nextPlayer = players[i];
+        int newPlayerIndex = (++currentPlayerIndex) % numberOfPlayers;
+        nextPlayer = players[newPlayerIndex];
 
-        if (nextPlayer.isBot())
-            handleBotRound();
+        if (nextPlayer.isBot()) handleBotRound();
+
         return 0;
     }
 

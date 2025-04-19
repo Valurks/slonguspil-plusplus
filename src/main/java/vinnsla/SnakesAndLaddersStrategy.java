@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Strategy class for generating snakes and ladders on a game board.
  */
-public class SnakesAndLaddersStrategy implements BehaviorStrategy{
+public class SnakesAndLaddersStrategy implements BehaviorStrategy {
     private final int MAX_RECURSION = 25;
     private final double MAX_CONNECTION_RATIO = 2.5;
     private double difficulty;
@@ -19,7 +19,7 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
      * Generates a list of board connections.
      */
     @Override
-    public List<BoardConnections> generate(double difficulty, int max){
+    public List<BoardConnections> generate(double difficulty, int max) {
         this.difficulty = difficulty;
         this.max = max;
         this.availableTiles = new ArrayList<>();
@@ -65,11 +65,12 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
 
     /**
      * Finds a tile that has not been used in a connection yet.
+     *
      * @return A valid tile number.
      */
     private int findValidTile() {
         int tile = availableTiles.get((int) (Math.random() * availableTiles.size()));
-        for (BoardConnections connections : connections){
+        for (BoardConnections connections : connections) {
             if (connections.to() == tile || connections.from() == tile)
                 return findValidTile();
         }
@@ -78,21 +79,22 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
 
     /**
      * Finds a valid destination tile for a current tile.
+     *
      * @param tile The current tile.
      * @return The valid destination tile.
-     *         -1 if MAX_RECURSION is hit.
+     * -1 if MAX_RECURSION is hit.
      */
     private int findValidDestinaton(int tile) {
         if (++recursion >= MAX_RECURSION) {
             recursion = 0;
             return -1;
         }
-        boolean direction = Math.random() > Math.pow(difficulty, 1.4) * 0.4; //true upp, false niður
-        int length = (int) (Math.random() * difficulty * 5 + 2); //lengd stiga/snáks
-        length = direction ? length : -length;
-        int destination = Math.min(Math.max(tile + length, 1), max-1);
+        boolean isLadder = Math.random() > Math.pow(difficulty, 1.4) * 0.4;
+        int connectionLength = (int) (Math.random() * difficulty * 5 + 2);
+        connectionLength = isLadder ? connectionLength : -connectionLength;
+        int destination = Math.min(Math.max(tile + connectionLength, 1), max - 1);
 
-        for (BoardConnections connections : connections){
+        for (BoardConnections connections : connections) {
             if (connections.to() == destination || connections.from() == destination)
                 return findValidDestinaton(tile);
         }

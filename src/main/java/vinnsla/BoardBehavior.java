@@ -36,11 +36,10 @@ public class BoardBehavior {
         int newTile = connectionMap.getOrDefault(currentTile,currentTile);
 
         if (connectionMap.containsKey(currentTile)) {
-            if (newTile > currentTile) {
-                player.setMessage(player.getName() + " climbed the ladder! \uD83E\uDE9C");
-            } else {
-                player.setMessage(player.getName() + " slid down the snake \uD83D\uDC0D");
-            }
+            String message = newTile > currentTile
+                    ? " climbed the ladder! \uD83E\uDE9C"
+                    : " slid down the snake \uD83D\uDC0D";
+            player.setMessage(player.getName() + message);
         }
         return newTile;
     }

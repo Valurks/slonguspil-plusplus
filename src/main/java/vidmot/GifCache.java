@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * A class that handles loading and managing the GIF´s
  */
-public class GifLoader {
+public class GifCache {
 
     private static final Image[] icons = new Image[4];
 
@@ -17,7 +17,7 @@ public class GifLoader {
     public static void initialize() {
         for (int i = 0; i < 4; i++) {
             icons[i] = new Image(
-                    Objects.requireNonNull(GifLoader.class.getResourceAsStream(
+                    Objects.requireNonNull(GifCache.class.getResourceAsStream(
                             "/vidmot/images/characters/" + i + ".gif"
                     ))
             );

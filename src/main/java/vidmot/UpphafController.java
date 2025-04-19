@@ -21,11 +21,14 @@ public class UpphafController {
     public ImageView fxSnake2;
     public Button fxStart;
 
+    private static final int SNAKE_ANIMATION_DURATION_SECONDS = 11;
+    private static final int START_BUTTON_SIZE = 150;
+
     /**
      * Initalizes the controller class by setting animation and start button.
      */
     public void initialize() {
-        animatesnakes();
+        animateSnakes();
         setStartButton();
     }
 
@@ -35,8 +38,8 @@ public class UpphafController {
     private void setStartButton() {
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vidmot/images/backgrounds/StartButton.png")));
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(150);
-        imageView.setFitHeight(150);
+        imageView.setFitWidth(START_BUTTON_SIZE);
+        imageView.setFitHeight(START_BUTTON_SIZE);
         fxStart.setGraphic(imageView);
         fxStart.setOnMouseEntered(e -> {
             fxStart.setScaleX(1.1);
@@ -52,7 +55,7 @@ public class UpphafController {
     /**
      * Creates 2 animated snakes.
      */
-    private void animatesnakes() {
+    private void animateSnakes() {
         Path path = new Path();
         path.getElements().add(new MoveTo(-200, 250));
         fxSnake1.setScaleX(-1);
@@ -97,7 +100,7 @@ public class UpphafController {
      */
     private void setPath(ImageView snake, PathTransition pathTransition, Path path){
         pathTransition.setNode(snake);
-        pathTransition.setDuration(Duration.seconds(11));
+        pathTransition.setDuration(Duration.seconds(SNAKE_ANIMATION_DURATION_SECONDS));
         pathTransition.setPath(path);
         pathTransition.setCycleCount(PathTransition.INDEFINITE);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
