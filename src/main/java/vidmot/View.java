@@ -1,7 +1,7 @@
 package vidmot;
 
 /**
- * Enum class that represents the current view.
+ * Represents different views of the application.
  */
 public enum View {
     GAME("slanga-view.fxml");

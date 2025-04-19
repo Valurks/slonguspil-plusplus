@@ -17,6 +17,7 @@ import java.util.Objects;
  * Controller class of the starting screen.
  */
 public class UpphafController {
+
     public ImageView fxSnake1;
     public ImageView fxSnake2;
     public Button fxStart;
@@ -25,7 +26,7 @@ public class UpphafController {
     private static final int START_BUTTON_SIZE = 150;
 
     /**
-     * Initalizes the controller class by setting animation and start button.
+     * Initializes the controller class by setting animation and start button.
      */
     public void initialize() {
         animateSnakes();

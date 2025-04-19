@@ -9,12 +9,13 @@ Ladders** board game, supporting **2 - 4** players.
 
 ### Project structure
 This is a standard Maven project, so your IDE should be able to automatically 
-understand the structure when you `git clone`it.
+understand the structure when you `git clone` it.
 
 The java version is **21+**
 
-The **main** code is located in [src/main/java/vidmot](src/main/java/vidmot) and [src/main/java/vinnsla](src/main/java/vinnsla)
-The **test** code is located in [src/test/java/vinnsla](src/test/java/vinnsla)
+The **main** code is located in [src/main/java/vidmot](src/main/java/vidmot) and [src/main/java/vinnsla](src/main/java/vinnsla).
+
+The **test** code is located in [src/test/java/vinnsla](src/test/java/vinnsla).
 
 ### Maven goals
 
@@ -34,14 +35,14 @@ To package the project into a JAR file, run the command
 `mvn clean package`
 
 Alternatively if you dont have an IDE or Maven, you can package the project 
-using the script file **[package.cmd](package.cmd)**
+using the script file **[package.cmd](package.cmd)**.
 
 ### Running JAR
-To run the packaged JAR file, use the script file **[runJAR.cmd](runJAR.cmd)** 
+To run the packaged JAR file, use the script file **[runJAR.cmd](runJAR.cmd)**. 
 
 ### UML diagram
-The UML is located in [UML](src/site/markdown/documentation.md)
+The UML is located in [Documentation](src/site/markdown/documentation.md).
 
 ### Design pattern
 The design patterns that are used are **Observer** pattern and
-**Strategy** pattern. They are described [here](src/site/markdown/documentation.md)
+**Strategy** pattern. They are described [Documentation](src/site/markdown/documentation.md).

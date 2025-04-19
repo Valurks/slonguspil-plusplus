@@ -29,7 +29,7 @@ public class SettingsDialogController {
     // settings[2]: difficulty
 
     /**
-     * Constructs a new isntance of the SettingsDialogController
+     * Constructs a new instance of the SettingsDialogController
      */
     public SettingsDialogController() {
         playerNames = new String[4];

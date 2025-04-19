@@ -8,9 +8,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * A class that tests the SnakesAndLaddersStrategy class
- * Verifies the behavior of the strategy for generating snakes and ladders
- * connections on the game board.
+ * Class that tests the behvior of SnakesAndLaddersStrategy class.
  */
 public class SnakesAndLaddersStrategyTest {
     private SnakesAndLaddersStrategy strategy;
@@ -51,7 +49,7 @@ public class SnakesAndLaddersStrategyTest {
     }
 
     /**
-     * Test generating a list of no connections.
+     * Tests generating a list of no connections.
      */
     @Test
     public void testGeneratingNoConnections(){
