@@ -22,7 +22,6 @@ public class GifLoader {
                     ))
             );
         }
-        System.out.println("Loaded " + icons.length + " gif images");
     }
 
     /**

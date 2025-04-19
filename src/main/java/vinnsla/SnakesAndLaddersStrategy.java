@@ -39,7 +39,6 @@ public class SnakesAndLaddersStrategy implements BehaviorStrategy{
      */
     public void createMap() {
         if (max == 0) {
-            System.out.println("Board size not set");
             return;
         }
         for (int i = 2; i < max; i++) {
