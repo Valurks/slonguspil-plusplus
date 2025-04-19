@@ -14,7 +14,7 @@ public class BoardBehavior {
     /**
      * Constructs a new board behavior with specified strategy, difficulty and max.
      * @param strategy The strategy used.
-     * @param difficulty The current difficulty,
+     * @param difficulty The current difficulty.
      * @param max The number of max tiles.
      */
     BoardBehavior(BehaviorStrategy strategy, double difficulty, int max) {

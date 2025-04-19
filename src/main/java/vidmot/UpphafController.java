@@ -23,7 +23,7 @@ public class UpphafController {
     public Button fxStart;
 
     /**
-     * Initalizes the controller class by setting animation and start button.
+     * Initializes the controller class by setting animation and start button.
      */
     public void initialize() {
         animatesnakes();
