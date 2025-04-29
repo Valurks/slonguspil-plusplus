@@ -125,11 +125,11 @@ public class SettingsDialogController {
         HBox difficultyBox = new HBox();
         HashMap<String, Double> difficultyMap = new HashMap<>();
         ToggleGroup group = new ToggleGroup();
-        difficultyMap.put("Easy", 0.75);
-        difficultyMap.put("Normal", 1.0);
-        difficultyMap.put("Hard", 1.5);
-        VBox[] radioBoxes = new VBox[3];
         String[] labels = new String[]{"Easy","Normal","Hard"};
+        difficultyMap.put(labels[0], 0.75);
+        difficultyMap.put(labels[1], 1.0);
+        difficultyMap.put(labels[2], 1.5);
+        VBox[] radioBoxes = new VBox[3];
         for (int i = 0; i < labels.length; i++) {
             radioBoxes[i] = createRadioButton(labels[i], group);
         }
