@@ -129,10 +129,9 @@ public class SettingsDialogController {
         difficultyMap.put("Normal", 1.0);
         difficultyMap.put("Hard", 1.5);
         VBox[] radioBoxes = new VBox[3];
-        int i = 0;
-        for (String key : difficultyMap.keySet()) {
-            radioBoxes[i] = createRadioButton(key, group);
-            i++;
+        String[] labels = new String[]{"Easy","Normal","Hard"};
+        for (int i = 0; i < labels.length; i++) {
+            radioBoxes[i] = createRadioButton(labels[i], group);
         }
         HashMap<Double, Integer> difficultyToIndexTranslator = new HashMap<>();
         difficultyToIndexTranslator.put(0.75, 0);
